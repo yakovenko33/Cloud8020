@@ -5,7 +5,7 @@ namespace CarPark\UserModule\Infrastructure\Interfaces;
 
 
 use CarPark\CommonModule\Bus\Command\CommandQueryInterface;
-use CarPark\UserModule\Infrastructure\Modals\User;
+use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\User;
 
 interface UserRepositoryInterface
 {

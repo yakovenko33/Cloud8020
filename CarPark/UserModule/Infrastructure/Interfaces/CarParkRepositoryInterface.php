@@ -4,27 +4,27 @@
 namespace CarPark\UserModule\Infrastructure\Interfaces;
 
 
-use CarPark\UserModule\Application\CreateCarsPark\DTO\Car as CarDto;
-use CarPark\UserModule\Application\CreateCarsPark\DTO\CarPark as CarsParkDto;
-use CarPark\UserModule\Infrastructure\Modals\Car;
-use CarPark\UserModule\Infrastructure\Modals\CarPark;
+use CarPark\UserModule\Application\CreateOrUpdateCarPark\DTO\Car as CarDto;
+use CarPark\UserModule\Application\CreateOrUpdateCarPark\DTO\CarPark as CarParkDto;
+use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\Car;
+use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\CarPark;
 
 interface CarParkRepositoryInterface
 {
     /**
-     * @param CarsParkDto $carsPark
+     * @param CarParkDto $carPark
      * @return CarPark|null
      */
-    public function insertCarsPark(CarsParkDto $carsPark): ?CarPark;
+    public function insertCarsPark(CarParkDto $carPark): ?CarPark;
 
     /**
-     * @param CarsParkDto $carsPark
+     * @param CarParkDto $carPark
      * @return CarPark|null
      */
-    public function updateCarsParkById(CarsParkDto $carsPark): ?CarPark;
+    public function updateCarsParkById(CarParkDto $carPark): ?CarPark;
 
     /**
-     * @param CarDTO $car
+     * @param CarDto $car
      * @return Car|null
      */
     public function insertCar(CarDto $car): ?Car;
@@ -34,4 +34,16 @@ interface CarParkRepositoryInterface
      * @return Car|null
      */
     public function updateCarById(CarDto $car): ?Car;
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteCarParkById(int $id): bool;
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteCarById(int $id): bool;
 }

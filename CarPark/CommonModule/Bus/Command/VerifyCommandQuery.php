@@ -3,6 +3,8 @@
 namespace CarPark\CommonModule\Bus\Command;
 
 
+use CarPark\UserModule\Infrastructure\Modals\User;
+
 class VerifyCommandQuery
 {
     /**
@@ -11,9 +13,9 @@ class VerifyCommandQuery
     protected $jwtToken;
 
     /**
-     * @var integer
+     * @var
      */
-    protected $userId;
+    protected $user;
 
     /**
      * VerifyCommandQuery constructor.
@@ -25,19 +27,19 @@ class VerifyCommandQuery
     }
 
     /**
-     * @param int $userId
+     * @param User $user
      */
-    public function setUserId(int $userId): void
+    public function setUser(User $user): void
     {
-        $this->userId = $userId;
+        $this->user = $user;
     }
 
     /**
-     * @return int
+     * @return User
      */
-    public function getUserId(): int
+    public function getUser(): User
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**

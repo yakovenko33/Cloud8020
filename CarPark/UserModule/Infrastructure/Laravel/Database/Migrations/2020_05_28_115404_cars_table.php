@@ -13,8 +13,8 @@ class CarsTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('cars_table')) {
-            Schema::create('cars_table', function (Blueprint $table) {
+        if (!Schema::hasTable('cars')) {
+            Schema::create('cars', function (Blueprint $table) {
                $table->bigIncrements("id");
                $table->string("number_car", 15);
                $table->string("driver_name", 75);
@@ -29,6 +29,6 @@ class CarsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cars_table');
+        Schema::dropIfExists('cars');
     }
 }

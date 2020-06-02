@@ -1,7 +1,7 @@
 <?php
 
 
-namespace CarPark\UserModule\Infrastructure\Modals;
+namespace CarPark\UserModule\Infrastructure\Laravel\Database\Modals;
 
 
 use Illuminate\Database\Eloquent\Model;

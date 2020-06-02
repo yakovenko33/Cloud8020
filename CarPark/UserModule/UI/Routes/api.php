@@ -9,5 +9,9 @@ Route::prefix('api')
         Route::get('/user/test', 'UserController@test');
         Route::post('/user/sing-up', 'UserController@singUp');
         Route::post('/user/sing-in', 'UserController@singIn');
-        Route::post('/cars-park', 'CarParkController@createCarPark');
+        Route::post('/car-park', 'CarParkController@createCarPark');
+        Route::delete('/car-park', 'CarParkController@deleteCarPark');
+        Route::delete('/car', 'CarParkController@deleteCar');
+        Route::get('/car-park/list', 'CarParkController@listCarPark');
+        Route::get('/car/list', 'CarParkController@listCar');
     });

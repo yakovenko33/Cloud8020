@@ -21,7 +21,6 @@ class CarsParksCars extends Migration
 
                 $table->foreign('cars_parks_id')->references('id')->on('cars_parks')->onDelete('cascade');
                 $table->foreign('cars_id')->references('id')->on('cars')->onDelete('cascade');
-                //$table->primary(['cars_parks_id','cars_id']);
             });
         }
     }

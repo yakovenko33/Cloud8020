@@ -11,7 +11,7 @@ use CarPark\UserModule\Application\CreateOrUpdateCarPark\Command\CreateOrUpdateC
 use CarPark\UserModule\Application\CreateOrUpdateCarPark\DTO\CarPark as CarsParkDto;
 use CarPark\UserModule\Infrastructure\Interfaces\CarParkRepositoryInterface;
 use CarPark\UserModule\Infrastructure\Interfaces\UserRepositoryInterface;
-use CarPark\UserModule\Infrastructure\Modals\CarPark;
+use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\CarPark;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
@@ -56,7 +56,11 @@ class CreateOrUpdateCarParkHandler
         try {
             DB::beginTransaction();
 
-            $carsPark = $this->insertOrUpdateCarsPark($commandQuery->getCarsPark());
+            $carsPark = null;
+            if ($commandQuery->getUser()->hasRole("MANAGER")) {
+                $carsPark = $this->insertOrUpdateCarsPark($commandQuery->getCarsPark());
+            }
+
             $this->insertOrUpdateCar($commandQuery, $carsPark);
             $this->resultHandler->setStatusCode(201);
 
@@ -85,11 +89,11 @@ class CreateOrUpdateCarParkHandler
     }
 
     /**
-     * @param CreateOrUpdateCarPark $commandQuery
+     * @param CommandQueryInterface $commandQuery
      * @param CarPark $carsPark
      * @throws ProblemWithDatabase
      */
-    private function insertOrUpdateCar(CreateOrUpdateCarPark $commandQuery, CarPark $carsPark): void
+    private function insertOrUpdateCar(CommandQueryInterface $commandQuery, CarPark $carsPark = null): void
     {
         $addedCars = [];
         foreach($commandQuery->getCars() as $car) {
@@ -103,7 +107,9 @@ class CreateOrUpdateCarParkHandler
             }
         }
 
-        $carsPark->cars()->attach($addedCars);
+        if ($carsPark) {
+            $carsPark->cars()->attach($addedCars);
+        }
     }
 
     /**

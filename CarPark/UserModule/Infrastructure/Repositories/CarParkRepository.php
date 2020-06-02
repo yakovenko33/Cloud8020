@@ -4,21 +4,21 @@
 namespace CarPark\UserModule\Infrastructure\Repositories;
 
 
-use CarPark\UserModule\Application\CreateCarsPark\DTO\CarPark as CarsParkDto;
+use CarPark\UserModule\Application\CreateOrUpdateCarPark\DTO\CarPark as CarParkDto;
 use CarPark\UserModule\Infrastructure\Interfaces\CarParkRepositoryInterface;
-use CarPark\UserModule\Infrastructure\Modals\Car;
-use CarPark\UserModule\Infrastructure\Modals\CarPark;
+use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\Car;
+use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\CarPark;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
-use \CarPark\UserModule\Application\CreateCarsPark\DTO\Car as CarDto;
+use \CarPark\UserModule\Application\CreateOrUpdateCarPark\DTO\Car as CarDto;
 
 class CarParkRepository implements CarParkRepositoryInterface
 {
     /**
-     * @param CarsParkDto $carsPark
+     * @param CarParkDto $carsPark
      * @return CarPark|null
      */
-    public function insertCarsPark(CarsParkDto $carsPark): ?CarPark
+    public function insertCarsPark(CarParkDto $carsPark): ?CarPark
     {
         try {
             $result = CarPark::create([
@@ -36,10 +36,10 @@ class CarParkRepository implements CarParkRepositoryInterface
     }
 
     /**
-     * @param CarsParkDto $carsPark
+     * @param CarParkDto $carsPark
      * @return CarPark|null
      */
-    public function updateCarsParkById(CarsParkDto $carsPark): ?CarPark
+    public function updateCarsParkById(CarParkDto $carsPark): ?CarPark
     {
         try {
             $result = CarPark::where(["id" => $carsPark->getId()])->first();
@@ -89,6 +89,40 @@ class CarParkRepository implements CarParkRepositoryInterface
         } catch (QueryException $e) {
             Log::error($e->getMessage() . $e->getTraceAsString());
             $result = null;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteCarParkById(int $id): bool
+    {
+        try {
+            CarPark::where('id', $id)->delete();
+            $result = true;
+        } catch (QueryException $e) {
+            Log::error($e->getMessage(). $e->getTraceAsString());
+            $result = false;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteCarById(int $id): bool
+    {
+        try {
+            Car::where('id', $id)->delete();
+            $result = true;
+        } catch (QueryException $e) {
+            Log::error($e->getMessage(). $e->getTraceAsString());
+            $result = false;
         }
 
         return $result;

@@ -12,7 +12,7 @@ use CarPark\UserModule\Application\CreateOrUpdateCarPark\DTO\CarPark;
 class CreateOrUpdateCarPark extends VerifyCommandQuery implements CommandQueryInterface
 {
     /**
-     * @var CarPark
+     * @var CarPark|null
      */
     private $carsPark;
 
@@ -28,7 +28,7 @@ class CreateOrUpdateCarPark extends VerifyCommandQuery implements CommandQueryIn
     public function __construct(array $data)
     {
         parent::__construct($data["jwt"]);
-        $this->carsPark = new CarPark($data["cars_park"]);
+        $this->carsPark = $data["cars_park"] ? new CarPark($data["cars_park"]) : null;
         $this->setCars($data["cars"]);
     }
 
@@ -43,9 +43,9 @@ class CreateOrUpdateCarPark extends VerifyCommandQuery implements CommandQueryIn
     }
 
     /**
-     * @return CarPark
+     * @return CarPark|null
      */
-    public function getCarsPark(): CarPark
+    public function getCarsPark(): ?CarPark
     {
         return $this->carsPark;
     }
@@ -63,6 +63,9 @@ class CreateOrUpdateCarPark extends VerifyCommandQuery implements CommandQueryIn
      */
     public function toArray(): array
     {
-        return $this->carsPark->toArray();
+        return [
+            "car_par" => $this->carsPark,
+            "cars" => $this->cars
+        ];
     }
 }

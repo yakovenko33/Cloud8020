@@ -6,7 +6,7 @@ namespace CarPark\UserModule\Infrastructure\Repositories;
 
 use CarPark\CommonModule\Bus\Command\CommandQueryInterface;
 use CarPark\UserModule\Infrastructure\Interfaces\UserRepositoryInterface;
-use CarPark\UserModule\Infrastructure\Modals\User;
+use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -39,6 +39,22 @@ class UserRepository implements UserRepositoryInterface
     {
         try {
             $user = User::where("email", $email)->first();
+        } catch (QueryException $e) {
+            Log::log($e->getMessage(), $e->getTraceAsString());
+            $user = null;
+        }
+
+        return $user;
+    }
+
+    /**
+     * @param int $id
+     * @return User|null
+     */
+    public function getById(int $id): ?User
+    {
+        try {
+            $user = User::where("id", $id)->first();
         } catch (QueryException $e) {
             Log::log($e->getMessage(), $e->getTraceAsString());
             $user = null;

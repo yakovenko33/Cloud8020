@@ -6,6 +6,9 @@ namespace CarPark\CommonModule\JWT\Middleware;
 
 use CarPark\CommonModule\Bus\Handler\ResultHandlerInterface;
 use CarPark\CommonModule\Bus\JWT\JwtDecorator;
+use CarPark\UserModule\Infrastructure\Modals\User;
+use CarPark\UserModule\Infrastructure\Repositories\UserRepository;
+use Illuminate\Support\Facades\Auth;
 use League\Tactician\Middleware;
 
 class JwtVerifyUser implements Middleware
@@ -15,13 +18,23 @@ class JwtVerifyUser implements Middleware
      */
     private $resultHandler;
 
+
     /**
-     * UserRegisterValidator constructor.
-     * @param ResultHandlerInterface $resultHandler
+     * @var UserRepository
      */
-    public function __construct(ResultHandlerInterface $resultHandler)
-    {
+    private $userRepository;
+
+    /**
+     * JwtVerifyUser constructor.
+     * @param ResultHandlerInterface $resultHandler
+     * @param UserRepository $userRepository
+     */
+    public function __construct(
+        ResultHandlerInterface $resultHandler,
+        UserRepository $userRepository
+    ) {
         $this->resultHandler = $resultHandler;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -33,7 +46,7 @@ class JwtVerifyUser implements Middleware
     {
         try {
             $decoded = JwtDecorator::getDataByToken($command->getJwtToken());
-            $command->setUserId($decoded->data->id);
+            $command->setUser($this->userRepository->getById($decoded->data->id));
         } catch (\Exception $e) {
             $this->resultHandler
                 ->setErrors(["authorization" => ["User authorization failed."]])
