@@ -1,0 +1,70 @@
+<?php
+declare(strict_types = 1);
+
+namespace CarPark\UserModule\Application\CreateOrUpdateCarPark\DTO;
+
+
+class Car
+{
+    /**
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $numberCar;
+
+    /**
+     * @var string
+     */
+    private $nameDriver;
+
+    /**
+     * Car constructor.
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->id = $data["id"];
+        $this->numberCar = $data["number_car"];
+        $this->nameDriver = $data["name_driver"];
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameDriver(): string
+    {
+        return $this->nameDriver;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNumberCar(): string
+    {
+        return $this->numberCar;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            "id" => "nullable|int", //bail|
+            "number_car" => $this->numberCar,
+            "name_driver" => $this->nameDriver
+        ];
+    }
+}
