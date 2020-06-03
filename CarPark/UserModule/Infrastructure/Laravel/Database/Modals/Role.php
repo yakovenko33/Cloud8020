@@ -32,14 +32,6 @@ class Role extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany("CarPark\UserModule\Infrastructure\Modals\User", "users_roles");
-    }
-
-    /**
-     * @return BelongsToMany
-     */
-    public function permissions(): BelongsToMany
-    {
-        return $this->belongsToMany("CarPark\UserModule\Infrastructure\Modals\Permission", "roles_permission");
+        return $this->belongsToMany(User::class, "users_roles");
     }
 }

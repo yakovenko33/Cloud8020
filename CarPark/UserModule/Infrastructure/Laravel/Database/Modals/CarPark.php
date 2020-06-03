@@ -12,12 +12,12 @@ class CarPark extends Model
     /**
      * @var string
      */
-    protected $table = 'cars_parks';
+    protected $table = 'car_parks';
 
     /**
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;//false;
 
     /**
      * @var array
@@ -25,7 +25,9 @@ class CarPark extends Model
     protected $fillable = [
         "title",
         "address",
-        'time_work'
+        'time_work',
+        "created_at",
+        "update_at"
     ];
 
     /**
@@ -33,6 +35,6 @@ class CarPark extends Model
      */
     public function cars(): BelongsToMany
     {
-        return $this->belongsToMany('CarPark\UserModule\Infrastructure\Modals\Car', 'cars_parks_cars');
+        return $this->belongsToMany(Car::class, 'car_parks_cars');
     }
 }

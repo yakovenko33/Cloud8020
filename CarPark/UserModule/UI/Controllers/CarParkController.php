@@ -8,11 +8,15 @@ use App\Http\Controllers\Controller;
 use CarPark\CommonModule\JWT\Middleware\JwtVerifyUser;
 use CarPark\CommonModule\UI\Response\Response;
 use CarPark\UserModule\Application\CreateOrUpdateCarPark\Command\CreateOrUpdateCarPark;
-use CarPark\UserModule\Application\CreateOrUpdateCarPark\Middleware\CarParksValidator;
+use CarPark\UserModule\Application\CreateOrUpdateCarPark\Middleware\CarParkValidator;
 use CarPark\UserModule\Application\CreateOrUpdateCarPark\Middleware\CarsValidator;
 use CarPark\UserModule\Application\CreateOrUpdateCarPark\Services\CreateOrUpdateCarParkHandler;
 use CarPark\UserModule\Application\DeleteCarPark\Command\DeleteCarPark;
 use CarPark\UserModule\Application\DeleteCarPark\Service\DeleteCarParkHandler;
+use CarPark\UserModule\Application\GetCarParksList\Query\GetCarParksList;
+use CarPark\UserModule\Application\GetCarParksList\Service\GetCarParksListHandler;
+use CarPark\UserModule\Application\GetCarsList\Query\GetCarsList;
+use CarPark\UserModule\Application\GetCarsList\Service\GetCarsListHandler;
 use Illuminate\Http\Request;
 use Joselfonseca\LaravelTactician\CommandBusInterface;
 use \Illuminate\Http\JsonResponse;
@@ -45,7 +49,7 @@ class CarParkController extends Controller
         $resultHandler = $this->bus->dispatch(
             CreateOrUpdateCarPark::class,
             $request->all(),
-            [CarParksValidator::class, CarsValidator::class, JwtVerifyUser::class] //JwtVerifyUser::class,
+            [CarParkValidator::class, CarsValidator::class, JwtVerifyUser::class]
         );
 
         return $this->getResponse($resultHandler);
@@ -77,7 +81,39 @@ class CarParkController extends Controller
         $resultHandler = $this->bus->dispatch(
             DeleteCarPark::class,
             $request->all(),
-            [ JwtVerifyUser::class]
+            [JwtVerifyUser::class]
+        );
+
+        return $this->getResponse($resultHandler);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getCarParksList(Request $request): JsonResponse
+    {
+        $this->bus->addHandler(GetCarParksList::class, GetCarParksListHandler::class);
+        $resultHandler = $this->bus->dispatch(
+            GetCarParksList::class,
+            ["jwt" => $request->bearerToken()],
+            [JwtVerifyUser::class] //JwtVerifyUser::class
+        );
+
+        return $this->getResponse($resultHandler);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getCarsList(Request $request): JsonResponse
+    {
+        $this->bus->addHandler(GetCarsList::class, GetCarsListHandler::class);
+        $resultHandler = $this->bus->dispatch(
+            GetCarsList::class,
+            ["jwt" => $request->bearerToken()],
+            [JwtVerifyUser::class] //
         );
 
         return $this->getResponse($resultHandler);

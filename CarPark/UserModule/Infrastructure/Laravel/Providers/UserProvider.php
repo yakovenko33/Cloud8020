@@ -25,8 +25,8 @@ class UserProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->loadRoutesFrom(__DIR__ . '/../../UI/Routes/api.php');
+        $this->loadRoutesFrom(__DIR__ . '/../../../UI/Routes/api.php');
 
-        $this->loadMigrationsFrom(__DIR__ . '/../../Infrastructure/Migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../../../Infrastructure/Migrations');
     }
 }

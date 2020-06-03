@@ -11,6 +11,7 @@ use CarPark\CommonModule\Bus\Handler\ResultHandlerInterface;
 use CarPark\CommonModule\Bus\JWT\JwtDecorator;
 use CarPark\UserModule\Application\SingIn\Exceptions\VerifyUserException;
 use CarPark\UserModule\Infrastructure\Interfaces\UserRepositoryInterface;
+use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\User;
 use Illuminate\Support\Facades\Hash;
 
 class SingInHandler
@@ -46,9 +47,7 @@ class SingInHandler
     {
         try {
             $user = $this->userRepository->getByEmail($commandQuery->getEmail());
-            if (empty($user)) {
-                throw new VerifyUserException();
-            }
+            $this->assertEmpty($user);
 
             $this->checkPassword($commandQuery->getPassword(), $user->password);
             $this->resultHandler->setResult(["jwt_token" => JwtDecorator::createToken(["id" => $user->id])]);
@@ -57,6 +56,17 @@ class SingInHandler
         }
 
         return $this->resultHandler;
+    }
+
+    /**
+     * @param User|null $user
+     * @throws VerifyUserException
+     */
+    private function assertEmpty(User $user = null): void
+    {
+        if (empty($user)) {
+            throw new VerifyUserException();
+        }
     }
 
     /**

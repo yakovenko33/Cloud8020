@@ -7,7 +7,7 @@ namespace CarPark\UserModule\Application\CreateOrUpdateCarPark\DTO;
 class CarPark
 {
     /**
-     * @var int
+     * @var int|null
      */
     private $id;
 
@@ -32,16 +32,16 @@ class CarPark
      */
     public function __construct(array $data)
     {
-        $this->id = $data["id"];
+        $this->id = array_key_exists("id", $data) ? $data["id"] : null;
         $this->title = $data["title"];
         $this->address = $data["address"];
         $this->timeWork = $data["time_work"];
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\User as UserModal;
 use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\Role as RoleModal;
+use Illuminate\Support\Str;
 
 class User extends Seeder
 {

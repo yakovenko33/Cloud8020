@@ -18,6 +18,9 @@ class CarsTable extends Migration
                $table->bigIncrements("id");
                $table->string("number_car", 15);
                $table->string("driver_name", 75);
+                $table->unsignedBigInteger("user_id");
+               $table->timestamp("created_at");
+               $table->timestamp("updated_at")->useCurrent();
             });
         }
     }

@@ -6,9 +6,7 @@ namespace CarPark\CommonModule\JWT\Middleware;
 
 use CarPark\CommonModule\Bus\Handler\ResultHandlerInterface;
 use CarPark\CommonModule\Bus\JWT\JwtDecorator;
-use CarPark\UserModule\Infrastructure\Modals\User;
 use CarPark\UserModule\Infrastructure\Repositories\UserRepository;
-use Illuminate\Support\Facades\Auth;
 use League\Tactician\Middleware;
 
 class JwtVerifyUser implements Middleware

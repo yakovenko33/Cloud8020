@@ -47,7 +47,7 @@ class User extends Model
      */
     public function roles(): BelongsToMany
     {
-        return $this->belongsToMany("CarPark\UserModule\Infrastructure\Modals\Role", "users_roles");
+        return $this->belongsToMany(Role::class, "users_roles");
     }
 
     /**
@@ -56,8 +56,9 @@ class User extends Model
      */
     public function hasRoles(...$roles): bool
     {
+        $rolesList = $this->roles()->get();
         foreach($roles as $role) {
-            if ($this->roles()->contains("name", $role)) {
+            if ($rolesList->contains("name", $role)) {
                 return true;
             }
         }

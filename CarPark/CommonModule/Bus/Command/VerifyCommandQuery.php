@@ -3,7 +3,7 @@
 namespace CarPark\CommonModule\Bus\Command;
 
 
-use CarPark\UserModule\Infrastructure\Modals\User;
+use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\User;
 
 class VerifyCommandQuery
 {

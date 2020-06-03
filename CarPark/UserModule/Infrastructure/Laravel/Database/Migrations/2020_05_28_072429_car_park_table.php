@@ -8,12 +8,14 @@ class CarParkTable extends Migration
 {
     public function up()
     {
-        if (!Schema::hasTable('cars_parks')) {
-            Schema::create('cars_parks', function (Blueprint $table) {
+        if (!Schema::hasTable('car_parks')) {
+            Schema::create('car_parks', function (Blueprint $table) {
                 $table->bigIncrements("id");
                 $table->string("title", 50);
                 $table->string("address", 80);
                 $table->string("time_work", 100);
+                $table->timestamp("created_at");
+                $table->timestamp("updated_at")->useCurrent();
             });
         }
     }
@@ -25,6 +27,6 @@ class CarParkTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cars_parks');
+        Schema::dropIfExists('car_parks');
     }
 }

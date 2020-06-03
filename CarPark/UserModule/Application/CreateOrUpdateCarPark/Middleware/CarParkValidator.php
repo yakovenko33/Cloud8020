@@ -5,13 +5,12 @@ namespace CarPark\UserModule\Application\CreateOrUpdateCarPark\Middleware;
 
 
 use CarPark\CommonModule\Bus\Handler\ResultHandlerInterface;
-use CarPark\CommonModule\Bus\Validator\ValidatorRoot;
-use CarPark\UserModule\Application\CreateOrUpdateCarPark\Command\CreateOrUpdateCarPark;
 use CarPark\UserModule\Application\CreateOrUpdateCarPark\DTO\CarPark;
 use Illuminate\Contracts\Validation\Validator as Result;
 use Illuminate\Support\Facades\Validator;
+use League\Tactician\Middleware;
 
-class CarParksValidator
+class CarParkValidator implements Middleware
 {
     /**
      * @var ResultHandlerInterface
@@ -19,7 +18,7 @@ class CarParksValidator
     private $resultHandler;
 
     /**
-     * CarParksValidator constructor.
+     * CarParkValidator constructor.
      * @param ResultHandlerInterface $resultHandler
      */
     public function __construct(ResultHandlerInterface $resultHandler)
@@ -34,8 +33,8 @@ class CarParksValidator
      */
     public function execute($command, callable $next)
     {
-        if ($command->getCarsPark()) {
-            return $this->validate($command->getCarsPark()) ? $next($command) : $this->resultHandler;
+        if ($command->getCarPark()) {
+            return $this->validate($command->getCarPark()) ? $next($command) : $this->resultHandler;
         }
 
         return $next($command);

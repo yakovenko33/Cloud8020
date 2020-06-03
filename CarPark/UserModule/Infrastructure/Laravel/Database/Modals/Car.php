@@ -17,14 +17,17 @@ class Car extends Model
     /**
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * @var array
      */
     protected $fillable = [
         "number_car",
-        "driver_name"
+        "driver_name",
+        "user_id",
+        "created_at",
+        "update_at"
     ];
 
     /**
@@ -32,6 +35,6 @@ class Car extends Model
      */
     public function carParks(): BelongsToMany
     {
-        return $this->belongsToMany('CarPark\UserModule\Infrastructure\Modals\CarPark', 'cars_parks_cars');
+        return $this->belongsToMany(CarPark::class, 'car_parks_cars');
     }
 }

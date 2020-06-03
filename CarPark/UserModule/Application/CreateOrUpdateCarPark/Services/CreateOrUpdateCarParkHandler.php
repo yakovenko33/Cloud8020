@@ -18,11 +18,6 @@ use Illuminate\Database\Eloquent\Model;
 class CreateOrUpdateCarParkHandler
 {
     /**
-     * @var UserRepositoryInterface
-     */
-    private $userRepository;
-
-    /**
      * @var CarParkRepositoryInterface
      */
     private $carParkRepository;
@@ -34,34 +29,32 @@ class CreateOrUpdateCarParkHandler
 
     /**
      * CreateOrUpdateCarParkHandler constructor.
-     * @param UserRepositoryInterface $userRepository
      * @param CarParkRepositoryInterface $carParkRepository
      * @param ResultHandlerInterface $resultHandler
      */
     public function __construct(
-        UserRepositoryInterface $userRepository,
         CarParkRepositoryInterface $carParkRepository,
         ResultHandlerInterface $resultHandler
     ) {
-        $this->userRepository = $userRepository;
         $this->carParkRepository = $carParkRepository;
         $this->resultHandler = $resultHandler;
     }
 
     /**
      * @param CommandQueryInterface $commandQuery
+     * @return ResultHandlerInterface
      */
-    public function handle(CommandQueryInterface $commandQuery): void
+    public function handle(CommandQueryInterface $commandQuery): ResultHandlerInterface
     {
         try {
             DB::beginTransaction();
 
-            $carsPark = null;
-            if ($commandQuery->getUser()->hasRole("MANAGER")) {
-                $carsPark = $this->insertOrUpdateCarsPark($commandQuery->getCarsPark());
+            $carPark = null;
+            if ($commandQuery->getUser()->hasRoles("MANAGER")) {
+                $carPark = $this->insertOrUpdateCarPark($commandQuery->getCarPark());
             }
 
-            $this->insertOrUpdateCar($commandQuery, $carsPark);
+            $this->insertOrUpdateCar($commandQuery, $carPark);
             $this->resultHandler->setStatusCode(201);
 
             DB::commit();
@@ -78,45 +71,45 @@ class CreateOrUpdateCarParkHandler
      * @return CarPark
      * @throws ProblemWithDatabase
      */
-    private function insertOrUpdateCarsPark(CarsParkDto $dto): CarPark
+    private function insertOrUpdateCarPark(CarsParkDto $dto): CarPark
     {
-        $carsPark = (empty($dto->getId()))
-            ? $this->carParkRepository->insertCarsPark($dto)
-            : $this->carParkRepository->updateCarsParkById($dto);
-        $this->assetEmpty($carsPark);
+        $carPark = (empty($dto->getId()))
+            ? $this->carParkRepository->insertCarPark($dto)
+            : $this->carParkRepository->updateCarParkById($dto);
+        $this->assetEmpty($carPark);
 
-        return $carsPark;
+        return $carPark;
     }
 
     /**
      * @param CommandQueryInterface $commandQuery
-     * @param CarPark $carsPark
+     * @param CarPark|null $carPark
      * @throws ProblemWithDatabase
      */
-    private function insertOrUpdateCar(CommandQueryInterface $commandQuery, CarPark $carsPark = null): void
+    private function insertOrUpdateCar(CommandQueryInterface $commandQuery, CarPark $carPark = null): void
     {
         $addedCars = [];
         foreach($commandQuery->getCars() as $car) {
             if (empty($car->getId())) {
-                $result = $this->carParkRepository->addCar($car);
+                $result = $this->carParkRepository->insertCar($car, $commandQuery->getUser()->id);
                 $this->assetEmpty($result);
                 $addedCars[] = $result->id;
             } else {
-                $result = $this->carParkRepository->updateCarById($car);
+                $result = $this->carParkRepository->updateCarById($car, $commandQuery->getUser()->id);
                 $this->assetEmpty($result);
             }
         }
 
-        if ($carsPark) {
-            $carsPark->cars()->attach($addedCars);
+        if ($carPark) {
+            $carPark->cars()->attach($addedCars);
         }
     }
 
     /**
-     * @param Model $entity
+     * @param Model|null $entity
      * @throws ProblemWithDatabase
      */
-    private function assetEmpty(Model $entity): void
+    private function assetEmpty(Model $entity = null): void
     {
         if (empty($entity)) {
             throw new ProblemWithDatabase();

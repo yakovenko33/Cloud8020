@@ -13,14 +13,14 @@ class CarsParksCars extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('cars_parks_cars')) {
-            Schema::create('cars_parks_cars', function (Blueprint $table) {
+        if (!Schema::hasTable('car_parks_cars')) {
+            Schema::create('car_parks_cars', function (Blueprint $table) {
                 $table->bigIncrements("id");
-                $table->unsignedBigInteger('cars_parks_id');
-                $table->unsignedBigInteger('cars_id');
+                $table->unsignedBigInteger('car_park_id');
+                $table->unsignedBigInteger('car_id');
 
-                $table->foreign('cars_parks_id')->references('id')->on('cars_parks')->onDelete('cascade');
-                $table->foreign('cars_id')->references('id')->on('cars')->onDelete('cascade');
+                $table->foreign('car_park_id')->references('id')->on('car_parks')->onDelete('cascade');
+                $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade');
             });
         }
     }
@@ -32,6 +32,6 @@ class CarsParksCars extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cars_parks_cars');
+        Schema::dropIfExists('car_parks_cars');
     }
 }

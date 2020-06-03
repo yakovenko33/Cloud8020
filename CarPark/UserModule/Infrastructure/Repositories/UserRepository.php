@@ -16,19 +16,19 @@ class UserRepository implements UserRepositoryInterface
     public function addUser(CommandQueryInterface $commandQuery): ?User
     {
         try {
-            $user = User::create([
+            $result = User::create([
                 "email" => $commandQuery->getEmail(),
                 "password" =>  Hash::make($commandQuery->getPassword(), [
                     "round" => 12
                 ])
             ]);
-            $user->save();
+            $result->save();
         } catch (QueryException $e) {
-            Log::log($e->getMessage(), $e->getTraceAsString());
-            $user = null;
+            Log::debug($e->getMessage() . $e->getTraceAsString());
+            $result = null;
         }
 
-        return $user;
+        return $result;
     }
 
     /**
@@ -38,13 +38,13 @@ class UserRepository implements UserRepositoryInterface
     public function getByEmail(string $email): ?User
     {
         try {
-            $user = User::where("email", $email)->first();
+            $result = User::where("email", $email)->first();
         } catch (QueryException $e) {
-            Log::log($e->getMessage(), $e->getTraceAsString());
-            $user = null;
+            Log::debug($e->getMessage() . $e->getTraceAsString());
+            $result = null;
         }
 
-        return $user;
+        return $result;
     }
 
     /**
@@ -54,12 +54,12 @@ class UserRepository implements UserRepositoryInterface
     public function getById(int $id): ?User
     {
         try {
-            $user = User::where("id", $id)->first();
+            $result = User::where("id", $id)->first();
         } catch (QueryException $e) {
-            Log::log($e->getMessage(), $e->getTraceAsString());
-            $user = null;
+            Log::debug($e->getMessage() . $e->getTraceAsString());
+            $result = null;
         }
 
-        return $user;
+        return $result;
     }
 }

@@ -14,7 +14,7 @@ class CreateOrUpdateCarPark extends VerifyCommandQuery implements CommandQueryIn
     /**
      * @var CarPark|null
      */
-    private $carsPark;
+    private $carPark;
 
     /**
      * @var array
@@ -28,7 +28,7 @@ class CreateOrUpdateCarPark extends VerifyCommandQuery implements CommandQueryIn
     public function __construct(array $data)
     {
         parent::__construct($data["jwt"]);
-        $this->carsPark = $data["cars_park"] ? new CarPark($data["cars_park"]) : null;
+        $this->carPark = array_key_exists("car_park", $data) ? new CarPark($data["car_park"]) : null;
         $this->setCars($data["cars"]);
     }
 
@@ -45,9 +45,9 @@ class CreateOrUpdateCarPark extends VerifyCommandQuery implements CommandQueryIn
     /**
      * @return CarPark|null
      */
-    public function getCarsPark(): ?CarPark
+    public function getCarPark(): ?CarPark
     {
-        return $this->carsPark;
+        return $this->carPark;
     }
 
     /**
