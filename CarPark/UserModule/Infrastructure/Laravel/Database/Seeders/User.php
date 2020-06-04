@@ -4,6 +4,7 @@
 namespace CarPark\UserModule\Infrastructure\Laravel\Database\Seeders;
 
 
+use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\User as UserModal;
@@ -14,10 +15,45 @@ class User extends Seeder
 {
     public function run(): void
     {
+        $this->createManager();
+        $this->createDriver();
+    }
+
+    /**
+     * @return array
+     */
+    private function initPermissions(): array
+    {
+        $createUpdateCarPark = Permission::create([
+            'name' => "create-update-car-park"
+        ]);
+        $createUpdateCarPark->save();
+
+        $deleteCar = Permission::create([
+            'name' => "delete-car"
+        ]);
+        $deleteCar->save();
+
+        $deleteCarPark = Permission::create([
+            'name' => "delete-car-park"
+        ]);
+        $deleteCar->save();
+
+        return [
+            $createUpdateCarPark->id,
+            $deleteCar->id,
+            $deleteCarPark->id
+        ];
+    }
+
+    private function createManager(): void
+    {
         $roleManager = RoleModal::create([
             "name" => "MANAGER"
         ]);
         $roleManager->save();
+
+        $roleManager->permissions()->attach($this->initPermissions());
 
         $userManager = UserModal::create([
             'email' => Str::random(10).'@gmail.com',
@@ -27,11 +63,14 @@ class User extends Seeder
         ]);
         $userManager->save();
         $userManager->roles()->attach($roleManager);
+    }
 
+    private function createDriver(): void
+    {
         $roleDriver = RoleModal::create([
             "name" => "DRIVER"
         ]);
-        $roleManager->save();
+        $roleDriver->save();
 
         $userDriver = UserModal::create([
             'email' => Str::random(10).'@gmail.com',

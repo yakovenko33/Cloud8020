@@ -9,10 +9,11 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Database\Eloquent\Model;
 //use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable;
+use CarPark\CommonModule\Traits\AccessControlTrait;
 
 class User extends Model
 {
-    use Authorizable;
+    use Authorizable, AccessControlTrait;
 
     /**
      * @var string
@@ -48,20 +49,5 @@ class User extends Model
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, "users_roles");
-    }
-
-    /**
-     * @param mixed ...$roles
-     * @return bool
-     */
-    public function hasRoles(...$roles): bool
-    {
-        $rolesList = $this->roles()->get();
-        foreach($roles as $role) {
-            if ($rolesList->contains("name", $role)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

@@ -50,7 +50,7 @@ class CreateOrUpdateCarParkHandler
             DB::beginTransaction();
 
             $carPark = null;
-            if ($commandQuery->getUser()->hasRoles("MANAGER")) {
+            if ($commandQuery->getUser()->hasPermissions("create-update-car-park")) {
                 $carPark = $this->insertOrUpdateCarPark($commandQuery->getCarPark());
             }
 

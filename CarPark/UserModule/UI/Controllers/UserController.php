@@ -14,6 +14,7 @@ use CarPark\UserModule\Application\SingUp\Middleware\SingUpValidator;
 use CarPark\UserModule\Application\SingUp\Service\SingUpHandler;
 use Illuminate\Http\Request;
 use \Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Joselfonseca\LaravelTactician\CommandBusInterface;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,15 +41,7 @@ class UserController extends Controller
      */
     public function test(): JsonResponse
     {
-        $this->test2("value work");
-        return \response()->json(["data" => "not permissions"], 200);
-    }
-
-    private function test2($string, \stdClass $class = null): void
-    {
-        echo "<pre>";
-        var_dump($string);
-        die;
+        return \response()->json(["data" => "result"], 200);
     }
 
     /**
@@ -57,7 +50,6 @@ class UserController extends Controller
      */
     public function singUp(Request $request): JsonResponse
     {
-        Auth::setUser();
         $this->bus->addHandler(SingUp::class, SingUpHandler::class);
         $resultHandler = $this->bus->dispatch(
             SingUp::class,

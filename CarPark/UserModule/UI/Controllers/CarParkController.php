@@ -97,7 +97,7 @@ class CarParkController extends Controller
         $resultHandler = $this->bus->dispatch(
             GetCarParksList::class,
             ["jwt" => $request->bearerToken()],
-            [JwtVerifyUser::class] //JwtVerifyUser::class
+            [JwtVerifyUser::class]
         );
 
         return $this->getResponse($resultHandler);
@@ -113,7 +113,7 @@ class CarParkController extends Controller
         $resultHandler = $this->bus->dispatch(
             GetCarsList::class,
             ["jwt" => $request->bearerToken()],
-            [JwtVerifyUser::class] //
+            [JwtVerifyUser::class]
         );
 
         return $this->getResponse($resultHandler);

@@ -60,7 +60,7 @@ abstract class ValidatorRoot implements Middleware
      */
     private function make(array $data = [])
     {
-        return Validator::make($data, $this->getRules(),  $this->getMessagesValidator());//self::MESSAGES_VALIDATOR
+        return Validator::make($data, $this->getRules(),  $this->getMessagesValidator());
     }
 
     /**

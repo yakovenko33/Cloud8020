@@ -44,7 +44,7 @@ class GetCarParksListHandler
         try {
             $result = ($query->getUser()->hasRoles("DRIVER"))
                 ? $this->repository->getCarParksList($query->getUser()->id)
-                : $result = $this->repository->getCarParkList();
+                : $this->repository->getCarParksList();
 
             if (empty($result)) {
                 throw new ProblemWithDatabase();

@@ -6,6 +6,7 @@ namespace CarPark\UserModule\Application\DeleteCarPark\Service;
 
 use CarPark\CommonModule\Bus\Command\CommandQueryInterface;
 use CarPark\CommonModule\Bus\Handler\ResultHandlerInterface;
+use CarPark\CommonModule\Exception\AccessControlException;
 use CarPark\CommonModule\Exception\ProblemWithDatabase;
 use CarPark\UserModule\Infrastructure\Interfaces\CarParkRepositoryInterface;
 
@@ -40,11 +41,18 @@ class DeleteCarParkHandler
      */
     public function handle(CommandQueryInterface $commandQuery): ResultHandlerInterface
     {
-        if ($commandQuery->getUser()->hasRole("MANAGER")) {
-            $this->deleteCarPark($commandQuery);
-        } else {
+        try {
+            $this->checkAccess($commandQuery);
+            if (empty($this->carParkRepository->deleteCarParkById($commandQuery->getUser()->getid()))) {
+                throw new ProblemWithDatabase();
+            }
+
+            $this->resultHandler->setStatusCode(202);
+        } catch (ProblemWithDatabase $e) {
+            $this->resultHandler->setErrors($e->getError());
+        } catch (AccessControlException $e) {
             $this->resultHandler
-                ->setErrors(["authorization" => ["User authorization failed."]])
+                ->setErrors($e->getError())
                 ->setStatusCode(403);
         }
 
@@ -52,18 +60,13 @@ class DeleteCarParkHandler
     }
 
     /**
-     * @param CommandQueryInterface $command
+     * @param CommandQueryInterface $commandQuery
+     * @throws AccessControlException
      */
-    private function deleteCarPark(CommandQueryInterface $command): void
+    private function checkAccess(CommandQueryInterface $commandQuery): void
     {
-        try {
-            if (empty($this->carParkRepository->deleteCarParkById($command->getid()))) {
-                throw new ProblemWithDatabase();
-            }
-
-            $this->resultHandler->setStatusCode(202);
-        } catch (ProblemWithDatabase $e) {
-            $this->resultHandler->setErrors($e->getError());
+        if (!$commandQuery->getUser()->hasPermissions("delete-car-park")) {
+            throw new AccessControlException();
         }
     }
 }
