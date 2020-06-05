@@ -3,6 +3,7 @@
 
 namespace CarPark\UserModule\Application\SingIn\Exceptions;
 
+
 use Throwable;
 
 class VerifyUserException extends \Exception
@@ -20,7 +21,7 @@ class VerifyUserException extends \Exception
      */
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
-        $this->error = ["verify" => "Email или пароль введен не верно"];
+        $this->error = ["verify" => ["Email или пароль введен не верно"]];
         parent::__construct($message, $code, $previous);
     }
 

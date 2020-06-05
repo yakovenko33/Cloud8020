@@ -48,7 +48,7 @@ class CarParkController extends Controller
         $this->bus->addHandler(CreateOrUpdateCarPark::class, CreateOrUpdateCarParkHandler::class);
         $resultHandler = $this->bus->dispatch(
             CreateOrUpdateCarPark::class,
-            $request->all(),
+            array_merge($request->all(), ["jwt" => $request->bearerToken()]),
             [CarParkValidator::class, CarsValidator::class, JwtVerifyUser::class]
         );
 
@@ -64,8 +64,8 @@ class CarParkController extends Controller
         $this->bus->addHandler(DeleteCarPark::class, DeleteCarParkHandler::class);
         $resultHandler = $this->bus->dispatch(
             DeleteCarPark::class,
-            $request->all(),
-            [ JwtVerifyUser::class]
+            array_merge($request->all(), ["jwt" => $request->bearerToken()]),
+            [JwtVerifyUser::class]
         );
 
         return $this->getResponse($resultHandler);
@@ -80,7 +80,7 @@ class CarParkController extends Controller
         $this->bus->addHandler(DeleteCarPark::class, DeleteCarParkHandler::class);
         $resultHandler = $this->bus->dispatch(
             DeleteCarPark::class,
-            $request->all(),
+            array_merge($request->all(), ["jwt" => $request->bearerToken()]),
             [JwtVerifyUser::class]
         );
 

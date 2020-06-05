@@ -1,12 +1,24 @@
 <template>
-    <div>
-        Cloud8020
+    <div id="app">
+        <header-block v-if="this.isAuthenticated"></header-block>
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
+    import Header from './components/layouts/Header';
+    import {mapGetters} from 'vuex';
+
     export default {
-        name: "app"
+        name: "app",
+        components: {
+            HeaderBlock: Header
+        },
+        computed: {
+            ...mapGetters("user", {
+                isAuthenticated: 'isAuthenticated'
+            }),
+        },
     }
 </script>
 

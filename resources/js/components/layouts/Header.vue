@@ -6,8 +6,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-left">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Главная</a>
+                <li class="nav-item" >
+                    <router-link class="nav-link" to="/add-car-park">Добавить автопарк</router-link>
                 </li>
                 <li class="nav-item" >
                     <a class="nav-link" href="#">Автопарки</a>
@@ -22,7 +22,6 @@
 
 <script>
     export default {
-        name: "Header"
     }
 </script>
 

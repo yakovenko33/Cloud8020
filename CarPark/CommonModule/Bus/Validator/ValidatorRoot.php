@@ -40,12 +40,12 @@ abstract class ValidatorRoot implements Middleware
      * @param array $data
      * @return bool
      */
-    private function validate(array $data): bool //protected
+    private function validate(array $data): bool
     {
         $validator = $this->make($data);
         if ($validator->fails()) {
             $this->resultHandler
-                ->setErrors($validator->errors()->getMessages())//;
+                ->setErrors($validator->errors()->getMessages())
                 ->setStatusCode(422);
 
             return false;

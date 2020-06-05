@@ -16,10 +16,10 @@ class JwtDecorator
     }
 
     /**
-     * @param string $token
+     * @param string|null $token
      * @return object
      */
-    public static function getDataByToken(string $token)
+    public static function getDataByToken(string $token = null)
     {
         return JWT::decode($token, env('JWT_SECRET', 'JWT_SECRET_VALUE'), ['HS256']);
     }

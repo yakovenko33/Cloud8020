@@ -29,14 +29,14 @@ window.Vue = require('vue');
 
 import Vue from 'vue';
 import App from './App.vue';
-//import router from './router/router';
-//import store from './store/index';
+import router from './router/router';
+import store from './store/index';
 import Vuelidate from 'vuelidate';
 
 Vue.use(Vuelidate);
 
 const app = new Vue({
-    //router,
-    //store,
+    router,
+    store,
     render: h => h(App)
 }).$mount('#app');

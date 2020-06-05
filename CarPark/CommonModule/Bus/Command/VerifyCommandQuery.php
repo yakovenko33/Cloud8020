@@ -21,7 +21,7 @@ class VerifyCommandQuery
      * VerifyCommandQuery constructor.
      * @param string $jwtToken
      */
-    public function __construct(string $jwtToken)
+    public function __construct(string $jwtToken = null)
     {
         $this->jwtToken = $jwtToken;
     }
@@ -43,9 +43,9 @@ class VerifyCommandQuery
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getJwtToken(): string
+    public function getJwtToken(): ?string
     {
         return $this->jwtToken;
     }

@@ -24,6 +24,9 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@casl/ability": "^4.1.4",
+        "@casl/vue": "^1.1.0",
+        "crypto-js": "^4.0.0",
         "vue-router": "^3.3.2",
         "vuelidate": "^0.7.5",
         "vuex": "^3.4.0"

@@ -43,7 +43,7 @@ class SingUpHandler
     public function handle(CommandQueryInterface $commandQuery): ResultHandlerInterface
     {
         try {
-            $user = $this->userRepository->addUser($commandQuery);
+            $user = $this->userRepository->insertUser($commandQuery);
             if (empty($user)) {
                 throw new ProblemWithDatabase();
             }

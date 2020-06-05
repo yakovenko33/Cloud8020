@@ -4,15 +4,16 @@
 namespace CarPark\UserModule\Application\SingIn\Service;
 
 
-
-
 use CarPark\CommonModule\Bus\Command\CommandQueryInterface;
 use CarPark\CommonModule\Bus\Handler\ResultHandlerInterface;
 use CarPark\CommonModule\Bus\JWT\JwtDecorator;
+use CarPark\CommonModule\Exception\ProblemWithDatabase;
 use CarPark\UserModule\Application\SingIn\Exceptions\VerifyUserException;
 use CarPark\UserModule\Infrastructure\Interfaces\UserRepositoryInterface;
 use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\User;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class SingInHandler
 {
@@ -50,12 +51,32 @@ class SingInHandler
             $this->assertEmpty($user);
 
             $this->checkPassword($commandQuery->getPassword(), $user->password);
-            $this->resultHandler->setResult(["jwt_token" => JwtDecorator::createToken(["id" => $user->id])]);
+            $this->resultHandler->setResult([
+                "jwt_token" => JwtDecorator::createToken(["id" => $user->id]),
+                "roles" =>  $this->getRoles($user->id)
+            ]);
         } catch (VerifyUserException $e) {
-            $this->resultHandler->setErrors($e->getError())->setStatusCode();
+            Log::debug(print_r($e->getError(), true));
+            $this->resultHandler->setErrors($e->getError())->setStatusCode(403);
+        } catch (ProblemWithDatabase $e) {
+            $this->resultHandler->setErrors($e->getError());
         }
 
         return $this->resultHandler;
+    }
+
+    /**
+     * @param int $userId
+     * @return Collection
+     * @throws ProblemWithDatabase
+     */
+    private function getRoles(int $userId): Collection
+    {
+        if (empty($roles = $this->userRepository->getRolesByUserId($userId))) {
+            throw new ProblemWithDatabase();
+        }
+
+        return $roles;
     }
 
     /**
