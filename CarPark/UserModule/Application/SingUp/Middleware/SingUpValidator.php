@@ -14,7 +14,7 @@ class SingUpValidator extends ValidatorRoot
     protected function getRules(): array
     {
         return [
-            "email" => 'required|string|max:50|exists:users,email|email:rfc,dns',
+            "email" => 'required|string|max:50|unique:users,email|email:rfc,dns',
             "password" => 'required|string|max:50'
         ];
     }
@@ -28,7 +28,7 @@ class SingUpValidator extends ValidatorRoot
             'email.required' => 'Поле email обязательно к заполнению.',
             'email.max' => "Длина email не должна превышать :max.",
             'email.email' => "Email введён не коректно",
-            'email.exists' => "Email уже существует",
+            'email.unique' => "Email уже существует",
             'password.required' => 'Поле пароль обязательно к заполнению.',
             'password.max' => "Длина пароля не должна превышать :max.",
         ];

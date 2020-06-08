@@ -167,7 +167,7 @@ return [
         /*
          * My Package Service Providers...
          */
-        CarPark\UserModule\Infrastructure\Providers\UserProvider::class,
+        CarPark\UserModule\Infrastructure\Laravel\Providers\UserProvider::class,
 
         /*
          * Application Service Providers...

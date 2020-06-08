@@ -1,7 +1,7 @@
 <?php
 
 
-namespace CarPark\UserModule\Infrastructure\Providers;
+namespace CarPark\UserModule\Infrastructure\Laravel\Providers;
 
 
 use CarPark\CommonModule\Bus\Handler\ResultHandler;

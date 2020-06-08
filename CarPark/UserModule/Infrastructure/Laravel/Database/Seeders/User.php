@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\User as UserModal;
 use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\Role as RoleModal;
-use Illuminate\Support\Str;
 
 class User extends Seeder
 {
@@ -56,7 +55,7 @@ class User extends Seeder
         $roleManager->permissions()->attach($this->initPermissions());
 
         $userManager = UserModal::create([
-            'email' => Str::random(10).'@gmail.com',
+            'email' => "test_manager@gmail.com",
             'password' => Hash::make('password_manager', [
                 "round" => 12
             ])
@@ -73,7 +72,7 @@ class User extends Seeder
         $roleDriver->save();
 
         $userDriver = UserModal::create([
-            'email' => Str::random(10).'@gmail.com',
+            'email' => "test_driver@gmail.com",
             'password' => Hash::make('password_driver', [
                 "round" => 12
             ])

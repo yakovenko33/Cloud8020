@@ -16,7 +16,6 @@ class JwtVerifyUser implements Middleware
      */
     private $resultHandler;
 
-
     /**
      * @var UserRepository
      */

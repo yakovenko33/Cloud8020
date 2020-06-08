@@ -56,7 +56,6 @@ class SingInHandler
                 "roles" =>  $this->getRoles($user->id)
             ]);
         } catch (VerifyUserException $e) {
-            Log::debug(print_r($e->getError(), true));
             $this->resultHandler->setErrors($e->getError())->setStatusCode(403);
         } catch (ProblemWithDatabase $e) {
             $this->resultHandler->setErrors($e->getError());
