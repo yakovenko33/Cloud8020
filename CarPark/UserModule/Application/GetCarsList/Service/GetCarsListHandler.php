@@ -43,7 +43,7 @@ class GetCarsListHandler
     public function handle(GetCarsList $carsList): ResultHandlerInterface
     {
         try {
-            $result = ($carsList->getUser()->hasRoles("DRIVE"))
+            $result = ($carsList->getUser()->hasRoles("DRIVER"))
                 ? $this->repository->getCarsList($carsList->getUser()->id)
                 : $this->repository->getCarsList();
 
@@ -51,9 +51,14 @@ class GetCarsListHandler
                 throw new ProblemWithDatabase();
             }
 
-            $this->resultHandler->setResult(["cars" => $result->toArray()]);
+            $this->resultHandler
+                ->setResult(["cars" => $result->toArray()])
+                ->setStatusCode(200);
+
         } catch (ProblemWithDatabase $e) {
-            $this->resultHandler->setErrors($e->getError());
+            $this->resultHandler
+                ->setErrors($e->getError())
+                ->getStatusCode();
         }
 
         return $this->resultHandler;

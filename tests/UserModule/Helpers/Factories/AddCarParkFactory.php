@@ -4,7 +4,7 @@
 namespace Tests\UserModule\Helpers\Factories;
 
 
-use Tests\UserModule\Helpers\DataClasses\AddCarPark;
+use Tests\UserModule\Helpers\Mocks\AddCarPark;
 use Tests\UserModule\Helpers\DataClasses\Car;
 use Tests\UserModule\Helpers\DataClasses\CarPark;
 

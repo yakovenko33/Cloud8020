@@ -7,6 +7,11 @@ namespace Tests\UserModule\Helpers\DataClasses;
 class CarPark
 {
     /**
+     * @var int|null
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $title;
@@ -32,6 +37,14 @@ class CarPark
         $this->title= $title;
         $this->address = $address;
         $this->timeWork = $timeWork;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     /**
@@ -97,6 +110,7 @@ class CarPark
     public function toArray(): array
     {
         return [
+            "id" => $this->id,
             "title" => $this->title,
             "address" => $this->address,
             "time_work" => $this->timeWork

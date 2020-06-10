@@ -49,7 +49,7 @@ class DeleteCarHandler
 
             $this->resultHandler->setStatusCode(202);
         } catch (ProblemWithDatabase $e) {
-            $this->resultHandler->setErrors($e->getError());
+            $this->resultHandler->setErrors($e->getError())->setStatusCode();
         } catch (AccessControlException $e) {
             $this->resultHandler->setErrors($e->getError())->setStatusCode(403);
         }

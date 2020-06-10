@@ -10,7 +10,7 @@ use Tests\UserModule\Helpers\DataClasses\Car;
 use Tests\UserModule\Helpers\DataClasses\CarPark;
 use Tests\UserModule\Helpers\Factories\AddCarParkFactory;
 
-class AddUpdateCars
+class ValidateCars
 {
     /**
      * @return array

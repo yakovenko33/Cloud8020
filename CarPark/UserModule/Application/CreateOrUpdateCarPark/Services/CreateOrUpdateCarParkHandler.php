@@ -60,7 +60,7 @@ class CreateOrUpdateCarParkHandler
             DB::commit();
         } catch (ProblemWithDatabase $e) {
             DB::rollBack();
-            $this->resultHandler->setErrors($e->getError());
+            $this->resultHandler->setErrors($e->getError())->setStatusCode();
         }
 
         return $this->resultHandler;

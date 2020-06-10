@@ -50,9 +50,11 @@ class GetCarParksListHandler
                 throw new ProblemWithDatabase();
             }
 
-            $this->resultHandler->setResult(["car_parks" => $result->toArray()]);
+            $this->resultHandler
+                ->setResult(["car_parks" => $result->toArray()])
+                ->setStatusCode(200);
         } catch(ProblemWithDatabase $e) {
-            $this->resultHandler->setErrors($e->getError());
+            $this->resultHandler->setErrors($e->getError())->getStatusCode();
         }
 
         return $this->resultHandler;

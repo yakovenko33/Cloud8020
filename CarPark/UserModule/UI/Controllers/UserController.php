@@ -12,6 +12,7 @@ use CarPark\UserModule\Application\SingIn\Service\SingInHandler;
 use CarPark\UserModule\Application\SingUp\Command\SingUp;
 use CarPark\UserModule\Application\SingUp\Middleware\SingUpValidator;
 use CarPark\UserModule\Application\SingUp\Service\SingUpHandler;
+use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\Car;
 use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\User;
 use Illuminate\Http\Request;
 use \Illuminate\Http\JsonResponse;
@@ -42,10 +43,11 @@ class UserController extends Controller
      */
     public function test(): JsonResponse
     {
+        $result = Car::where('user_id', 2)->with("carParks")->get();
+
         return \response()->json([
-            "data" => "result",
-            "error" => ["verify" => ["error verify"]]
-        ], 403); //"result"
+            "data" => $result,
+        ], 200); //"result"
     }
 
     /**

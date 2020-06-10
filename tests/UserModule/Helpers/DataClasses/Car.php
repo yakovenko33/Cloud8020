@@ -7,6 +7,11 @@ namespace Tests\UserModule\Helpers\DataClasses;
 class Car
 {
     /**
+     * @var int|null
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $numberCar;
@@ -25,6 +30,14 @@ class Car
     {
         $this->numberCar = $numberCar;
         $this->nameDriver = $nameDriver;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     /**
@@ -71,6 +84,7 @@ class Car
     public function toArray(): array
     {
         return [
+            "id" => $this->id,
             "number_car" => $this->numberCar,
             "name_driver" => $this->nameDriver
         ];

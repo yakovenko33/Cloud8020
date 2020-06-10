@@ -54,11 +54,11 @@ class SingInHandler
             $this->resultHandler->setResult([
                 "jwt_token" => JwtDecorator::createToken(["id" => $user->id]),
                 "roles" =>  $this->getRoles($user->id)
-            ]);
+            ])->setStatusCode(200);
         } catch (VerifyUserException $e) {
             $this->resultHandler->setErrors($e->getError())->setStatusCode(403);
         } catch (ProblemWithDatabase $e) {
-            $this->resultHandler->setErrors($e->getError());
+            $this->resultHandler->setErrors($e->getError())->setStatusCode();
         }
 
         return $this->resultHandler;

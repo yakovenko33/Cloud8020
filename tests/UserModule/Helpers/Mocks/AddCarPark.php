@@ -1,8 +1,11 @@
 <?php
 
 
-namespace Tests\UserModule\Helpers\DataClasses;
+namespace Tests\UserModule\Helpers\Mocks;
 
+
+use Tests\UserModule\Helpers\DataClasses\Car;
+use Tests\UserModule\Helpers\DataClasses\CarPark;
 
 class AddCarPark
 {
@@ -72,6 +75,22 @@ class AddCarPark
     }
 
     /**
+     * @return CarPark
+     */
+    public function getCarPark(): CarPark
+    {
+        return $this->carPark;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCars(): array
+    {
+        return $this->cars;
+    }
+
+    /**
      * @param int $index
      * @param string $numberCar
      * @return $this
@@ -91,6 +110,17 @@ class AddCarPark
     public function changeNameDriverForIndex(int $index, string $nameDriver = ""): self
     {
         $this->cars[$index]->setNameDriver($nameDriver);
+
+        return $this;
+    }
+
+    /**
+     * @param Car $car
+     * @return $this
+     */
+    public function addCar(Car $car): self
+    {
+        $this->cars[] = $car;
 
         return $this;
     }

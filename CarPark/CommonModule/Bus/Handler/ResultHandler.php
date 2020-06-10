@@ -20,7 +20,7 @@ class ResultHandler implements ResultHandlerInterface
     /**
      * @var int
      */
-    private $statusCode = 200;
+    private $statusCode;
 
     /**
      * @param array $errors

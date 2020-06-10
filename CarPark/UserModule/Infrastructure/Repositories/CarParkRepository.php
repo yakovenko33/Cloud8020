@@ -169,7 +169,7 @@ class CarParkRepository implements CarParkRepositoryInterface
         try {
             $result = (empty($userId))
                 ? Car::with("carParks")->get()
-                : Car::where('user_id', $userId )->with("carParks")->get();
+                : Car::where('user_id', $userId)->with("carParks")->get();
         } catch (QueryException $e) {
             Log::debug($e->getMessage() . $e->getTraceAsString());
             $result = null;

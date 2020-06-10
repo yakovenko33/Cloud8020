@@ -5,12 +5,12 @@ namespace Tests\UserModule\Helpers\DataProvider;
 
 
 use Illuminate\Support\Str;
-use Tests\UserModule\Helpers\DataClasses\AddCarPark;
+use Tests\UserModule\Helpers\Mocks\AddCarPark;
 use Tests\UserModule\Helpers\DataClasses\Car;
 use Tests\UserModule\Helpers\DataClasses\CarPark;
 use Tests\UserModule\Helpers\Factories\AddCarParkFactory;
 
-class AddUpdateCarPark
+class ValidateCarPark
 {
     public static function getData(): array
     {

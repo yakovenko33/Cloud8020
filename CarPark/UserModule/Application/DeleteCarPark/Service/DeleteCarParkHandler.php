@@ -9,6 +9,7 @@ use CarPark\CommonModule\Bus\Handler\ResultHandlerInterface;
 use CarPark\CommonModule\Exception\AccessControlException;
 use CarPark\CommonModule\Exception\ProblemWithDatabase;
 use CarPark\UserModule\Infrastructure\Interfaces\CarParkRepositoryInterface;
+use Illuminate\Support\Facades\Log;
 
 class DeleteCarParkHandler
 {
@@ -43,13 +44,13 @@ class DeleteCarParkHandler
     {
         try {
             $this->checkAccess($commandQuery);
-            if (empty($this->carParkRepository->deleteCarParkById($commandQuery->getUser()->getid()))) {
+            if (empty($this->carParkRepository->deleteCarParkById($commandQuery->getId()))) {
                 throw new ProblemWithDatabase();
             }
 
             $this->resultHandler->setStatusCode(202);
         } catch (ProblemWithDatabase $e) {
-            $this->resultHandler->setErrors($e->getError());
+            $this->resultHandler->setErrors($e->getError())->setStatusCode();
         } catch (AccessControlException $e) {
             $this->resultHandler
                 ->setErrors($e->getError())

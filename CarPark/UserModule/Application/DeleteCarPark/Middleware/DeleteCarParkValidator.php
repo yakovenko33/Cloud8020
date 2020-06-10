@@ -4,7 +4,9 @@
 namespace CarPark\UserModule\Application\DeleteCarPark\Middleware;
 
 
-class DeleteCarParkValidator
+use CarPark\CommonModule\Bus\Validator\ValidatorRoot;
+
+class DeleteCarParkValidator extends ValidatorRoot
 {
     /**
      * @return array
@@ -24,7 +26,7 @@ class DeleteCarParkValidator
         return [
             "id.required" => "Параметр обязательный",
             "id.integer" => "Параметр должен быть числом",
-            "id.exists" => "Данной машины не существует"
+            "id.exists" => "Данного парка не существует"
         ];
     }
 }
