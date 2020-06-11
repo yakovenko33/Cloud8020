@@ -14,4 +14,5 @@ Route::prefix('api')
         Route::delete('/car', 'CarParkController@deleteCar');
         Route::get('/car-parks/list', 'CarParkController@getCarParksList');
         Route::get('/cars/list', 'CarParkController@getCarsList');
+        Route::get('/car-park', 'CarParkController@getCarsList');
     });

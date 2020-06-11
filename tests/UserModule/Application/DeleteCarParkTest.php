@@ -6,6 +6,7 @@ namespace Tests\UserModule\Application;
 
 use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\CarPark;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 use Tests\UserModule\Helpers\Traits\AddCarPark;
 use Tests\UserModule\Helpers\Traits\UserSingIn;
@@ -83,23 +84,24 @@ class DeleteCarParkTest extends TestCase
             [
                 [
                     "id" => [
-                        "Данного парка не существует"
+                        "Параметр должен быть числом"
                     ]
                 ],
                 422,
                 'errors',
-            ]
+                Str::random(10),
+            ],
         ];
     }
 
     /**
      * @dataProvider dataProvider
-     * @param int $request
      * @param array $errors
      * @param int $statusCode
      * @param string $status
+     * @param null $request
      */
-    public function testValidateDeleteCarPark(array $errors, int $statusCode, string $status, int $request = null): void
+    public function testValidateDeleteCarPark(array $errors, int $statusCode, string $status, $request = null): void
     {
         $response = $this->withHeader(
             "Authorization", "Bearer " . $this->singIn()

@@ -12,47 +12,25 @@ use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\Role as RoleModal;
 
 class User extends Seeder
 {
+    /**
+     * @var array
+     */
+    private $managerPermissions = [
+        "create-update-car-park",
+        "delete-car",
+        "delete-car-park",
+        "get-edit-car-park"
+    ];
+
     public function run(): void
     {
         $this->createManager();
         $this->createDriver();
     }
 
-    /**
-     * @return array
-     */
-    private function initPermissions(): array
-    {
-        $createUpdateCarPark = Permission::create([
-            'name' => "create-update-car-park"
-        ]);
-        $createUpdateCarPark->save();
-
-        $deleteCar = Permission::create([
-            'name' => "delete-car"
-        ]);
-        $deleteCar->save();
-
-        $deleteCarPark = Permission::create([
-            'name' => "delete-car-park"
-        ]);
-        $deleteCar->save();
-
-        return [
-            $createUpdateCarPark->id,
-            $deleteCar->id,
-            $deleteCarPark->id
-        ];
-    }
-
     private function createManager(): void
     {
-        $roleManager = RoleModal::create([
-            "name" => "MANAGER"
-        ]);
-        $roleManager->save();
-
-        $roleManager->permissions()->attach($this->initPermissions());
+        $roleManager = $this->createRole("MANAGER", $this->managerPermissions());
 
         $userManager = UserModal::create([
             'email' => "test_manager@gmail.com",
@@ -66,10 +44,7 @@ class User extends Seeder
 
     private function createDriver(): void
     {
-        $roleDriver = RoleModal::create([
-            "name" => "DRIVER"
-        ]);
-        $roleDriver->save();
+        $roleDriver = $this->createRole("DRIVER", $this->driverPermissions());
 
         $userDriver = UserModal::create([
             'email' => "test_driver@gmail.com",
@@ -79,5 +54,59 @@ class User extends Seeder
         ]);
         $userDriver->save();
         $userDriver->roles()->attach($roleDriver);
+    }
+
+    /**
+     * @param string $nameRole
+     * @param array $permissions
+     * @return RoleModal
+     */
+    private function createRole(string $nameRole, array $permissions): RoleModal
+    {
+        $role = RoleModal::create([
+            "name" => $nameRole
+        ]);
+
+        $role->save();
+        $role->permissions()->attach($permissions);
+
+        return $role;
+    }
+
+    /**
+     * @return array
+     */
+    private function managerPermissions(): array //initPermissions
+    {
+        $permissions = [];
+        foreach($this->managerPermissions as $permission) {
+            $permissions[] = $this->addPermission($permission);
+        }
+
+        return $permissions;
+    }
+
+    /**
+     * @return array
+     */
+    private function driverPermissions(): array
+    {
+        $permissions[] = $this->addPermission("get-edit-car");
+
+        return $permissions;
+    }
+
+    /**
+     * @param string $namePermission
+     * @return int
+     */
+    private function addPermission(string $namePermission): int
+    {
+        $permission = Permission::create([
+            'name' => $namePermission
+        ]);
+        $permission->save();
+
+        return $permission->id;
     }
 }

@@ -177,4 +177,36 @@ class CarParkRepository implements CarParkRepositoryInterface
 
         return $result;
     }
+
+    /**
+     * @param int $id
+     * @return Car|null
+     */
+    public function getCarById(int $id): ?Car
+    {
+        try {
+            $result = Car::where("id", $id)->first();
+        } catch (QueryException $e) {
+            Log::debug($e->getMessage() . $e->getTraceAsString());
+            $result = null;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int $id
+     * @return CarPark|null
+     */
+    public function getCarParkById(int $id): ?CarPark
+    {
+        try {
+            $result = CarPark::where("id", $id)->with()->first();
+        } catch (QueryException $e) {
+            Log::debug($e->getMessage() . $e->getTraceAsString());
+            $result = null;
+        }
+
+        return $result;
+    }
 }

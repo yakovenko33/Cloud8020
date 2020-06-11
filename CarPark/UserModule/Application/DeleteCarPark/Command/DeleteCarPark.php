@@ -10,7 +10,7 @@ use CarPark\CommonModule\Bus\Command\VerifyCommandQuery;
 class DeleteCarPark extends VerifyCommandQuery implements CommandQueryInterface
 {
     /**
-     * @var int
+     * @var mixed
      */
     private $id;
 
@@ -25,9 +25,9 @@ class DeleteCarPark extends VerifyCommandQuery implements CommandQueryInterface
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }

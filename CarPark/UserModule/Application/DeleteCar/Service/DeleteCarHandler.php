@@ -9,6 +9,7 @@ use CarPark\CommonModule\Bus\Handler\ResultHandlerInterface;
 use CarPark\CommonModule\Exception\AccessControlException;
 use CarPark\CommonModule\Exception\ProblemWithDatabase;
 use CarPark\UserModule\Infrastructure\Interfaces\CarParkRepositoryInterface;
+use Illuminate\Support\Facades\Log;
 
 class DeleteCarHandler
 {
@@ -41,6 +42,7 @@ class DeleteCarHandler
      */
     public function handle(CommandQueryInterface $commandQuery): ResultHandlerInterface
     {
+        Log::debug("Delete car " . $commandQuery->getId());
         try {
             $this->checkAccess($commandQuery);
             if (empty($this->carParkRepository->deleteCarById($commandQuery->getId()))) {

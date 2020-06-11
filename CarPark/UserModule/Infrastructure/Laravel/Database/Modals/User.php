@@ -7,8 +7,6 @@ namespace CarPark\UserModule\Infrastructure\Laravel\Database\Modals;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Database\Eloquent\Model;
-//use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Contracts\Auth\Authenticatable;
 use CarPark\CommonModule\Traits\AccessControlTrait;
 
 class User extends Model

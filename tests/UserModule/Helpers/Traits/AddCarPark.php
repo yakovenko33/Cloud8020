@@ -33,7 +33,7 @@ trait AddCarPark
         $driverJwt = $this->singIn("test_driver@gmail.com", "password_driver");
         $addCarPark = AddCarParkFactory::creatDefault();
         $addCarPark->addCar(new Car("number_4", "Surname Name 4"))
-            ->changeNameDriverForIndex(0, "number_3")
+            ->changeNameDriverForIndex(0, "Surname Name 3")
             ->changeNumberCarForIndex(0,"number_3");
 
         $responseDriver = $this->withHeader('Authorization', 'Bearer ' .  $driverJwt)

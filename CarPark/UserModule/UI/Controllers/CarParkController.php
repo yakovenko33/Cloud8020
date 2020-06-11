@@ -11,15 +11,19 @@ use CarPark\UserModule\Application\CreateOrUpdateCarPark\Command\CreateOrUpdateC
 use CarPark\UserModule\Application\CreateOrUpdateCarPark\Middleware\CarParkValidator;
 use CarPark\UserModule\Application\CreateOrUpdateCarPark\Middleware\CarsValidator;
 use CarPark\UserModule\Application\CreateOrUpdateCarPark\Services\CreateOrUpdateCarParkHandler;
+use CarPark\UserModule\Application\DeleteCar\Middleware\DeleteCarValidator;
+use CarPark\UserModule\Application\DeleteCar\Service\DeleteCarHandler;
 use CarPark\UserModule\Application\DeleteCarPark\Command\DeleteCarPark;
 use CarPark\UserModule\Application\DeleteCarPark\Middleware\DeleteCarParkValidator;
 use CarPark\UserModule\Application\DeleteCarPark\Service\DeleteCarParkHandler;
+use CarPark\UserModule\Application\GetCarPark\Midleware\GetCarParkValidate;
+use CarPark\UserModule\Application\GetCarPark\Query\GetCarPark;
+use CarPark\UserModule\Application\GetCarPark\Service\GetCarParkHandler;
 use CarPark\UserModule\Application\GetCarParksList\Query\GetCarParksList;
 use CarPark\UserModule\Application\GetCarParksList\Service\GetCarParksListHandler;
 use CarPark\UserModule\Application\GetCarsList\Query\GetCarsList;
 use CarPark\UserModule\Application\GetCarsList\Service\GetCarsListHandler;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Joselfonseca\LaravelTactician\CommandBusInterface;
 use \Illuminate\Http\JsonResponse;
 
@@ -47,8 +51,6 @@ class CarParkController extends Controller
      */
     public function createCarPark(Request $request): JsonResponse
     {
-        Log::debug($request->bearerToken());
-
         $this->bus->addHandler(CreateOrUpdateCarPark::class, CreateOrUpdateCarParkHandler::class);
         $resultHandler = $this->bus->dispatch(
             CreateOrUpdateCarPark::class,
@@ -81,11 +83,11 @@ class CarParkController extends Controller
      */
     public function deleteCar(Request $request): JsonResponse
     {
-        $this->bus->addHandler(DeleteCarPark::class, DeleteCarParkHandler::class);
+        $this->bus->addHandler(DeleteCarPark::class, DeleteCarHandler::class);
         $resultHandler = $this->bus->dispatch(
             DeleteCarPark::class,
             array_merge($request->all(), ["jwt" => $request->bearerToken()]),
-            [JwtVerifyUser::class]
+            [JwtVerifyUser::class, DeleteCarValidator::class]
         );
 
         return $this->getResponse($resultHandler);
@@ -118,6 +120,21 @@ class CarParkController extends Controller
             GetCarsList::class,
             ["jwt" => $request->bearerToken()],
             [JwtVerifyUser::class]
+        );
+
+        return $this->getResponse($resultHandler);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getCarPark(Request $request): JsonResponse
+    {
+        $this->bus->addHandler(GetCarPark::class, GetCarParkHandler::class);
+        $resultHandler = $this->bus->dispatch(GetCarPark::class,
+            array_merge($request->all(),  ["jwt" => $request->bearerToken()]),
+            [JwtVerifyUser::class, GetCarParkValidate::class]
         );
 
         return $this->getResponse($resultHandler);
