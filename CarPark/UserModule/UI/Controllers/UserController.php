@@ -39,18 +39,6 @@ class UserController extends Controller
     }
 
     /**
-     * @return JsonResponse
-     */
-    public function test(): JsonResponse
-    {
-        $result = Car::where('user_id', 2)->with("carParks")->get();
-
-        return \response()->json([
-            "data" => $result,
-        ], 200); //"result"
-    }
-
-    /**
      * @param Request $request
      * @return JsonResponse
      */

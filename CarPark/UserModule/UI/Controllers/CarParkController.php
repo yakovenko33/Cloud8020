@@ -132,7 +132,8 @@ class CarParkController extends Controller
     public function getCarPark(Request $request): JsonResponse
     {
         $this->bus->addHandler(GetCarPark::class, GetCarParkHandler::class);
-        $resultHandler = $this->bus->dispatch(GetCarPark::class,
+        $resultHandler = $this->bus->dispatch(
+            GetCarPark::class,
             array_merge($request->all(),  ["jwt" => $request->bearerToken()]),
             [JwtVerifyUser::class, GetCarParkValidate::class]
         );

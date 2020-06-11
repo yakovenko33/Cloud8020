@@ -1,7 +1,7 @@
 <?php
 
 
-namespace CarPark\UserModule\Application\GetCarParkForEdit\Exception;
+namespace CarPark\UserModule\Application\GetCarPark\Exception;
 
 
 use Throwable;

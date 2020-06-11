@@ -19,7 +19,8 @@ class User extends Seeder
         "create-update-car-park",
         "delete-car",
         "delete-car-park",
-        "get-edit-car-park"
+        "get-edit-car-park",
+        "get-edit-car"
     ];
 
     public function run(): void
@@ -76,7 +77,7 @@ class User extends Seeder
     /**
      * @return array
      */
-    private function managerPermissions(): array //initPermissions
+    private function managerPermissions(): array
     {
         $permissions = [];
         foreach($this->managerPermissions as $permission) {

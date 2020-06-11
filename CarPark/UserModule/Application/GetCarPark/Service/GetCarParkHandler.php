@@ -7,10 +7,9 @@ namespace CarPark\UserModule\Application\GetCarPark\Service;
 use CarPark\CommonModule\Bus\Command\VerifyCommandQuery;
 use CarPark\CommonModule\Bus\Handler\ResultHandlerInterface;
 use CarPark\CommonModule\Exception\ProblemWithDatabase;
-use CarPark\UserModule\Application\GetCarParkForEdit\Exception\BadDataException;
+use CarPark\UserModule\Application\GetCarPark\Exception\BadDataException;
 use CarPark\UserModule\Application\SingIn\Exceptions\VerifyUserException;
 use CarPark\UserModule\Infrastructure\Interfaces\CarParkRepositoryInterface;
-use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\CarPark;
 use Illuminate\Database\Eloquent\Model;
 
 class GetCarParkHandler
@@ -81,7 +80,7 @@ class GetCarParkHandler
     private function setCarPark(VerifyCommandQuery $query): void
     {
         if (!empty($query->getCarParkId())) {
-            if (!$query->getUser()->hasPermission("get-edit-car-park")) {
+            if (!$query->getUser()->hasPermissions("get-edit-car-park")) {
                 throw new VerifyUserException();
             }
 
@@ -100,7 +99,7 @@ class GetCarParkHandler
     private function setCar(VerifyCommandQuery $query): void
     {
         if (!empty($query->getCarId())) {
-            if (!$query->getUser()->hasPermission("get-edit-car")) {
+            if (!$query->getUser()->hasPermissions("get-edit-car")) {
                 throw new VerifyUserException();
             }
 

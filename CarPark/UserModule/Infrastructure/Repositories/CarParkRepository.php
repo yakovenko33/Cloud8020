@@ -201,7 +201,7 @@ class CarParkRepository implements CarParkRepositoryInterface
     public function getCarParkById(int $id): ?CarPark
     {
         try {
-            $result = CarPark::where("id", $id)->with()->first();
+            $result = CarPark::where("id", $id)->with("cars")->first();
         } catch (QueryException $e) {
             Log::debug($e->getMessage() . $e->getTraceAsString());
             $result = null;

@@ -26,7 +26,7 @@ class DeleteCarParkValidator extends ValidatorRoot
         return [
             "id.required" => "Параметр обязательный",
             "id.integer" => "Параметр должен быть числом",
-            "id.exists" => "Данного парка не существует"
+            "id.exists" => "Данного автопарка не существует"
         ];
     }
 }

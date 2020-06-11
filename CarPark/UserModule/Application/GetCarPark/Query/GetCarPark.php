@@ -26,8 +26,8 @@ class GetCarPark extends VerifyCommandQuery
     {
         parent::__construct($data["jwt"]);
 
-        $this->carParkId = $data["car_park_id"];
-        $this->carId = $data["car_id"];
+        $this->carParkId = array_key_exists("car_park_id", $data) ? $data["car_park_id"] : null;
+        $this->carId = array_key_exists("car_id", $data) ? $data["car_id"] : null;
     }
 
     /**

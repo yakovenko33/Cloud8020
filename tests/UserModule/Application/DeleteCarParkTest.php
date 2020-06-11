@@ -74,7 +74,7 @@ class DeleteCarParkTest extends TestCase
             [
                 [
                     "id" => [
-                        "Данного парка не существует"
+                        "Данного автопарка не существует"
                     ]
                 ],
                 422,
