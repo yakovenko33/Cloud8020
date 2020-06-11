@@ -41,6 +41,7 @@ Eloquent ORM).Сам проект находиться в папке CarPark.
 ### Команда для выполнения seeder:
 - php artisan db:seed --class=CarPark\UserModule\Infrastructure\Laravel\Database\Seeders\User
 
- 
+ ### Команда для выполнения тестов:
+- vendor\bin\phpunit tests\
 
 
