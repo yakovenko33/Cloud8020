@@ -13,21 +13,21 @@
                 <div class="form-group row">
                     <label for="title-car-park" class="col-md-3 col-form-label color-text-elem">Название</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" id="title-car-park" v-model="this.dataForm.carPark.title">
+                        <input type="text" class="form-control" id="title-car-park" v-model.trim="dataForm.carPark.title">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="address-car-park" class="col-md-3 col-form-label color-text-elem">Адресс</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" id="address-car-park" v-model="this.dataForm.carPark.address">
+                        <input type="text" class="form-control" id="address-car-park" v-model.trim="dataForm.carPark.address">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="time-work-car-park" class="col-sm-3 col-form-label color-text-elem">График работы</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" id="time-work-car-park" v-model="this.dataForm.carPark.timeWork">
+                        <input type="text" class="form-control" id="time-work-car-park" v-model.trim="dataForm.carPark.timeWork">
                     </div>
                 </div>
 
@@ -45,14 +45,14 @@
                         <label class="color-text-elem">Номер машины</label>
 
                         <div class="form-group row" v-for="car in this.dataForm.cars">
-                            <input type="text" class="form-control car-elem" v-model="car.number">
+                            <input type="text" class="form-control car-elem" v-model.trim="car.number">
                         </div>
                     </div>
                     <div class="col-md-6 offset-md-1">
                         <label class="color-text-elem">Имя водителя</label>
 
                         <div class="form-group row" v-for="(car, index) in this.dataForm.cars">
-                            <input type="text" class="form-control car-elem col-md-8" v-model="car.nameDriver">
+                            <input type="text" class="form-control car-elem col-md-8" v-model.trim="car.nameDriver">
                             <div class="delete-car offset-md-1 col-md-1" @click="removeCar(index)" id="index"><span>&#x2212</span></div>
                         </div>
                     </div>
@@ -96,21 +96,23 @@
         },
         methods: {
             addCar(){
-                this.cars.push({
+                this.dataForm.cars.push({
                     number: null,
                     nameDriver: null,
                 })
             },
             sendData(){
-                http.getHttp().post("user/car-park", this.dataForm)
+                console.log(this.dataForm);
+                http.getHttp().post("/car-park", this.dataForm)
                     .then((response) => {
                         console.log(response.data);
                     }).catch((error) => {
                         console.log(error.response);
+                        console.log(error.response.data);
                 });
             },
             removeCar(index){
-                this.cars.splice(index, 1);
+                this.dataForm.cars.splice(index, 1);
             }
         }
     }

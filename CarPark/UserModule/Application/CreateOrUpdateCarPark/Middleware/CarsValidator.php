@@ -85,6 +85,7 @@ class CarsValidator implements Middleware
     public function getRules(): array
     {
         return [
+            "id" => "nullable|integer|bail|exists:cars,id",
             "number_car" => "required|string|max:15",
             "name_driver" => "required|string|max:75"
         ];
@@ -96,6 +97,8 @@ class CarsValidator implements Middleware
     public function getMessagesValidator(): array
     {
         return [
+            "id.integer" => "Id должно быть целочисельным",
+            "id.exists" => "Такой машины не существует",
             "number_car.required" => "Номер машины обязательный",
             "number_car.max" => "Длина номера машины превышает :max символов",
             "name_driver.required" => "Имя водителя обязательное",

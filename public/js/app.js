@@ -7380,20 +7380,22 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addCar: function addCar() {
-      this.cars.push({
+      this.dataForm.cars.push({
         number: null,
         nameDriver: null
       });
     },
     sendData: function sendData() {
-      _api_api__WEBPACK_IMPORTED_MODULE_0__["default"].getHttp().post("user/car-park", this.dataForm).then(function (response) {
+      console.log(this.dataForm);
+      _api_api__WEBPACK_IMPORTED_MODULE_0__["default"].getHttp().post("/car-park", this.dataForm).then(function (response) {
         console.log(response.data);
       })["catch"](function (error) {
         console.log(error.response);
+        console.log(error.response.data);
       });
     },
     removeCar: function removeCar(index) {
-      this.cars.splice(index, 1);
+      this.dataForm.cars.splice(index, 1);
     }
   }
 });
@@ -99296,20 +99298,28 @@ var render = function() {
               directives: [
                 {
                   name: "model",
-                  rawName: "v-model",
-                  value: this.dataForm.carPark.title,
-                  expression: "this.dataForm.carPark.title"
+                  rawName: "v-model.trim",
+                  value: _vm.dataForm.carPark.title,
+                  expression: "dataForm.carPark.title",
+                  modifiers: { trim: true }
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text", id: "title-car-park" },
-              domProps: { value: this.dataForm.carPark.title },
+              domProps: { value: _vm.dataForm.carPark.title },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(this.dataForm.carPark, "title", $event.target.value)
+                  _vm.$set(
+                    _vm.dataForm.carPark,
+                    "title",
+                    $event.target.value.trim()
+                  )
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
                 }
               }
             })
@@ -99331,24 +99341,28 @@ var render = function() {
               directives: [
                 {
                   name: "model",
-                  rawName: "v-model",
-                  value: this.dataForm.carPark.address,
-                  expression: "this.dataForm.carPark.address"
+                  rawName: "v-model.trim",
+                  value: _vm.dataForm.carPark.address,
+                  expression: "dataForm.carPark.address",
+                  modifiers: { trim: true }
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text", id: "address-car-park" },
-              domProps: { value: this.dataForm.carPark.address },
+              domProps: { value: _vm.dataForm.carPark.address },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
                   _vm.$set(
-                    this.dataForm.carPark,
+                    _vm.dataForm.carPark,
                     "address",
-                    $event.target.value
+                    $event.target.value.trim()
                   )
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
                 }
               }
             })
@@ -99370,24 +99384,28 @@ var render = function() {
               directives: [
                 {
                   name: "model",
-                  rawName: "v-model",
-                  value: this.dataForm.carPark.timeWork,
-                  expression: "this.dataForm.carPark.timeWork"
+                  rawName: "v-model.trim",
+                  value: _vm.dataForm.carPark.timeWork,
+                  expression: "dataForm.carPark.timeWork",
+                  modifiers: { trim: true }
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text", id: "time-work-car-park" },
-              domProps: { value: this.dataForm.carPark.timeWork },
+              domProps: { value: _vm.dataForm.carPark.timeWork },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
                   _vm.$set(
-                    this.dataForm.carPark,
+                    _vm.dataForm.carPark,
                     "timeWork",
-                    $event.target.value
+                    $event.target.value.trim()
                   )
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
                 }
               }
             })
@@ -99413,9 +99431,10 @@ var render = function() {
                     directives: [
                       {
                         name: "model",
-                        rawName: "v-model",
+                        rawName: "v-model.trim",
                         value: car.number,
-                        expression: "car.number"
+                        expression: "car.number",
+                        modifiers: { trim: true }
                       }
                     ],
                     staticClass: "form-control car-elem",
@@ -99426,7 +99445,10 @@ var render = function() {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(car, "number", $event.target.value)
+                        _vm.$set(car, "number", $event.target.value.trim())
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
                       }
                     }
                   })
@@ -99450,9 +99472,10 @@ var render = function() {
                     directives: [
                       {
                         name: "model",
-                        rawName: "v-model",
+                        rawName: "v-model.trim",
                         value: car.nameDriver,
-                        expression: "car.nameDriver"
+                        expression: "car.nameDriver",
+                        modifiers: { trim: true }
                       }
                     ],
                     staticClass: "form-control car-elem col-md-8",
@@ -99463,7 +99486,10 @@ var render = function() {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(car, "nameDriver", $event.target.value)
+                        _vm.$set(car, "nameDriver", $event.target.value.trim())
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
                       }
                     }
                   }),
@@ -118232,8 +118258,8 @@ var Api = /*#__PURE__*/function () {
 
     var token = _store_index__WEBPACK_IMPORTED_MODULE_1__["default"].getters["user/getToken"];
     this.http = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
-      baseURL: "http://cloud8020/api/",
-      //change ENV
+      baseURL: "/api/",
+      //change ENV //http://cloud8020
       headers: {
         Authorization: 'Bearer '.token
       }

@@ -64,7 +64,7 @@ class CreateOrUpdateCarPark extends VerifyCommandQuery implements CommandQueryIn
     public function toArray(): array
     {
         return [
-            "car_par" => $this->carsPark,
+            "car_par" => $this->carPark,
             "cars" => $this->cars
         ];
     }

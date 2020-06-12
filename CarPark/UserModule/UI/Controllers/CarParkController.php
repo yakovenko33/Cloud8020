@@ -24,6 +24,7 @@ use CarPark\UserModule\Application\GetCarParksList\Service\GetCarParksListHandle
 use CarPark\UserModule\Application\GetCarsList\Query\GetCarsList;
 use CarPark\UserModule\Application\GetCarsList\Service\GetCarsListHandler;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Joselfonseca\LaravelTactician\CommandBusInterface;
 use \Illuminate\Http\JsonResponse;
 

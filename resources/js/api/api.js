@@ -7,7 +7,7 @@ class Api {
         let token = store.getters["user/getToken"];
 
         this.http = axios.create({
-            baseURL: "http://cloud8020/api/", //change ENV
+            baseURL: "/api/", //change ENV //http://cloud8020
             headers: {
                 Authorization: 'Bearer ' . token
             }

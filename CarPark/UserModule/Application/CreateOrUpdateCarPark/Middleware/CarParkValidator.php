@@ -72,6 +72,7 @@ class CarParkValidator implements Middleware
     private function getRules(): array
     {
         return [
+            "id" => "nullable|integer|bail|exists:car_parks,id",
             "title" => "required|string|max:50",
             "address" => "required|string|max:80",
             "time_work" => "required|string|max:100"
@@ -84,6 +85,8 @@ class CarParkValidator implements Middleware
     private function getMessagesValidator(): array
     {
         return [
+            "id.integer" => "Id должно быть целочисельным",
+            "id.exists" => "Такого автопарка не существует",
             "title.required" => "Название автопарка обязательное поле",
             "title.max" => "Длина названия автопарка превышает :max символов",
             "address.required" => "Адресс автопарка обязательный",

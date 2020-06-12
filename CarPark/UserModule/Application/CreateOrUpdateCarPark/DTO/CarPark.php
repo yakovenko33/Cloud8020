@@ -76,7 +76,7 @@ class CarPark
     public function toArray(): array
     {
         return [
-            "id" => "nullable|int",
+            "id" => $this->id,
             "title" => $this->title,
             "address" => $this->address,
             "time_work" => $this->timeWork

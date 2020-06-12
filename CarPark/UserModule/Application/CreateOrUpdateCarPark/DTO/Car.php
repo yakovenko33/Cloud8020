@@ -62,7 +62,7 @@ class Car
     public function toArray(): array
     {
         return [
-            "id" => "nullable|int", //bail|
+            "id" => $this->id, //
             "number_car" => $this->numberCar,
             "name_driver" => $this->nameDriver
         ];
