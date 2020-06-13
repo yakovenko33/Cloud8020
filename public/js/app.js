@@ -7416,17 +7416,11 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.dataForm); // if("edit-car") {
       //     delete this.dataForm.car_park
       // }
-      //console.log(this.dataForm);
 
       _api_api__WEBPACK_IMPORTED_MODULE_0__["default"].getHttp().post("/car-park", this.dataForm).then(function (response) {
         console.log(response.data);
       })["catch"](function (error) {
-        console.log(error.response);
-        console.log(error.response.data);
-        _this.errors = error.response.data.errors; //this.errors.cars_errors[0 + 1].hasOwnProperty("name_driver");
-        //this.errors.cars_errors[0 + 1].hasOwnProperty("number_car");
-
-        _this.errors.cars_errors[index - 1].hasOwnProperty("name_driver");
+        _this.errors = error.response.data.errors;
       });
     },
     removeCar: function removeCar(index) {

@@ -131,20 +131,11 @@
                 // if("edit-car") {
                 //     delete this.dataForm.car_park
                 // }
-                //console.log(this.dataForm);
-
                 http.getHttp().post("/car-park", this.dataForm)
                     .then((response) => {
                         console.log(response.data);
                     }).catch((error) => {
-                        console.log(error.response);
-                        console.log(error.response.data);
                         this.errors = error.response.data.errors;
-
-                        //this.errors.cars_errors[0 + 1].hasOwnProperty("name_driver");
-                        //this.errors.cars_errors[0 + 1].hasOwnProperty("number_car");
-                    this.errors.cars_errors[index - 1].hasOwnProperty("name_driver");
-
                 });
             },
             removeCar(index){

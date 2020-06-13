@@ -52,9 +52,6 @@ class CarParkController extends Controller
      */
     public function createCarPark(Request $request): JsonResponse
     {
-        Log::debug(print_r($request->all(),true));
-//        Log::debug($request->bearerToken());
-//        die;
         $this->bus->addHandler(CreateOrUpdateCarPark::class, CreateOrUpdateCarParkHandler::class);
         $resultHandler = $this->bus->dispatch(
             CreateOrUpdateCarPark::class,
