@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  cloud8020-nginx:
+    restart: always
+    build:
+      context: ./../../
+      dockerfile: ./infrastructure/dev/http/nginx.docker
+    volumes:
+      - ./../../:/var/www/html/
+    depends_on:
+      - cloud8020-php-fpm
+    ports:
+      - 8080:80
+    networks:
+      - cloud8020
+
+  cloud8020-php-fpm:
+    restart: always
+    build:
+      context: ./../../
+      dockerfile: ./infrastructure/dev/php-fpm/php-fpm.docker
+    volumes:
+      - ./../../:/var/www/html/
+    depends_on:
+      - postgres
+    networks:
+      - cloud8020
+
+  postgres:
+    image: postgres:12
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: cloud8020
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - cloud8020
+
+networks:
+  cloud8020:
+    driver: bridge
