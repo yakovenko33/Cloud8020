@@ -9,7 +9,7 @@ class Api {
         this.http = axios.create({
             baseURL: "/api/", //change ENV //http://cloud8020
             headers: {
-                Authorization: 'Bearer ' . token
+                Authorization: "Bearer " + token
             }
         });
     };

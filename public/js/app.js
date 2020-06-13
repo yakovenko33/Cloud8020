@@ -7361,21 +7361,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dataForm: {
-        carPark: {
+        car_park: {
           title: '',
           address: '',
-          timeWork: ''
+          time_work: ''
         },
         cars: [{
-          number: '',
-          nameDriver: ''
+          number_car: '',
+          name_driver: ''
         }]
-      }
+      },
+      errors: {}
     };
   },
   methods: {
@@ -7386,12 +7411,22 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     sendData: function sendData() {
-      console.log(this.dataForm);
+      var _this = this;
+
+      console.log(this.dataForm); // if("edit-car") {
+      //     delete this.dataForm.car_park
+      // }
+      //console.log(this.dataForm);
+
       _api_api__WEBPACK_IMPORTED_MODULE_0__["default"].getHttp().post("/car-park", this.dataForm).then(function (response) {
         console.log(response.data);
       })["catch"](function (error) {
         console.log(error.response);
         console.log(error.response.data);
+        _this.errors = error.response.data.errors; //this.errors.cars_errors[0 + 1].hasOwnProperty("name_driver");
+        //this.errors.cars_errors[0 + 1].hasOwnProperty("number_car");
+
+        _this.errors.cars_errors[index - 1].hasOwnProperty("name_driver");
       });
     },
     removeCar: function removeCar(index) {
@@ -37024,7 +37059,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.edit-car-park[data-v-37b5766a] {\n    margin-top: 40px;\n    margin-right: auto;\n    margin-left: auto;\n    max-width: 800px;\n    border: 1px solid #778899;\n    background-color: #F8F8FF;\n}\n.color-text-elem[data-v-37b5766a] {\n    color: #666e9c;\n}\n.main-elem[data-v-37b5766a] {\n    font-weight: 600;\n    font-size: 22px;\n}\n.mr-auto[data-v-37b5766a] {\n    margin-right: auto;\n    margin-left: auto;\n}\n.mr-20-vertical[data-v-37b5766a] {\n    margin-top: 20px;\n    margin-bottom: 20px;\n}\n.car-elem[data-v-37b5766a] {\n    /*margin-top: 15px;*/\n}\nhr[data-v-37b5766a] {\n    border: none;\n    background-color: #666e9c;\n    color: #666e9c;\n    height: 2px;\n}\n.delete-car[data-v-37b5766a] {\n    width: 25px;\n    height: 25px;\n    background: #fd367b;\n    margin-top: 5px;\n    content: \"&#x2212\";\n    color: #FFFFFF;\n    text-align: center;\n    border: 1px solid #fd367b;\n    border-radius: 4px;\n    cursor: pointer;\n}\n.delete-car[data-v-37b5766a]:active {\n    width: 25px;\n    height: 25px;\n    background: #800080;\n    margin-top: 5px;\n    content: \"&#x2212\";\n    color: #FFFFFF;\n    text-align: center;\n    border: 1px solid #800080;\n    border-radius: 4px;\n    cursor: pointer;\n}\n.add-car[data-v-37b5766a] {\n    width: 25px;\n    height: 25px;\n    background: #3549d8;\n    margin-top: 5px;\n    content: \"&#x2212\";\n    color: #FFFFFF;\n    text-align: center;\n    border: 1px solid #3549d8;\n    border-radius: 4px;\n    cursor: pointer;\n}\n.add-car[data-v-37b5766a]:active {\n    width: 25px;\n    height: 25px;\n    background: #00BFFF;\n    margin-top: 5px;\n    content: \"&#x2212\";\n    color: #FFFFFF;\n    text-align: center;\n    border: 1px solid #00BFFF;\n    border-radius: 4px;\n    cursor: pointer;\n}\n.save-button[data-v-37b5766a] {\n    background: #17cab8;\n    color: #ffffff;\n}\n.save-button[data-v-37b5766a]:active {\n    background: #0000CD;\n    color: #ffffff;\n}\n", ""]);
+exports.push([module.i, "\n.edit-car-park[data-v-37b5766a] {\n    margin-top: 40px;\n    margin-right: auto;\n    margin-left: auto;\n    max-width: 800px;\n    border: 1px solid #778899;\n    background-color: #F8F8FF;\n}\n.color-text-elem[data-v-37b5766a] {\n    color: #666e9c;\n}\n.main-elem[data-v-37b5766a] {\n    font-weight: 600;\n    font-size: 22px;\n}\n.mr-auto[data-v-37b5766a] {\n    margin-right: auto;\n    margin-left: auto;\n}\n.mr-20-vertical[data-v-37b5766a] {\n    margin-top: 20px;\n    margin-bottom: 20px;\n}\n.car-elem[data-v-37b5766a] {\n    /*margin-top: 15px;*/\n}\nhr[data-v-37b5766a] {\n    border: none;\n    background-color: #666e9c;\n    color: #666e9c;\n    height: 2px;\n}\n.delete-car[data-v-37b5766a] {\n    width: 25px;\n    height: 25px;\n    background: #fd367b;\n    margin-top: 5px;\n    content: \"&#x2212\";\n    color: #FFFFFF;\n    text-align: center;\n    border: 1px solid #fd367b;\n    border-radius: 4px;\n    cursor: pointer;\n}\n.delete-car[data-v-37b5766a]:active {\n    width: 25px;\n    height: 25px;\n    background: #800080;\n    margin-top: 5px;\n    content: \"&#x2212\";\n    color: #FFFFFF;\n    text-align: center;\n    border: 1px solid #800080;\n    border-radius: 4px;\n    cursor: pointer;\n}\n.add-car[data-v-37b5766a] {\n    width: 25px;\n    height: 25px;\n    background: #3549d8;\n    margin-top: 5px;\n    content: \"&#x2212\";\n    color: #FFFFFF;\n    text-align: center;\n    border: 1px solid #3549d8;\n    border-radius: 4px;\n    cursor: pointer;\n}\n.add-car[data-v-37b5766a]:active {\n    width: 25px;\n    height: 25px;\n    background: #00BFFF;\n    margin-top: 5px;\n    content: \"&#x2212\";\n    color: #FFFFFF;\n    text-align: center;\n    border: 1px solid #00BFFF;\n    border-radius: 4px;\n    cursor: pointer;\n}\n.save-button[data-v-37b5766a] {\n    background: #17cab8;\n    color: #ffffff;\n}\n.save-button[data-v-37b5766a]:active {\n    background: #0000CD;\n    color: #ffffff;\n}\n.error-validator[data-v-37b5766a] {\n    color: #D8000C;\n    text-align: center;\n    margin-bottom: 15px;\n}\n", ""]);
 
 // exports
 
@@ -99299,21 +99334,21 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model.trim",
-                  value: _vm.dataForm.carPark.title,
-                  expression: "dataForm.carPark.title",
+                  value: _vm.dataForm.car_park.title,
+                  expression: "dataForm.car_park.title",
                   modifiers: { trim: true }
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text", id: "title-car-park" },
-              domProps: { value: _vm.dataForm.carPark.title },
+              domProps: { value: _vm.dataForm.car_park.title },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
                   _vm.$set(
-                    _vm.dataForm.carPark,
+                    _vm.dataForm.car_park,
                     "title",
                     $event.target.value.trim()
                   )
@@ -99325,6 +99360,23 @@ var render = function() {
             })
           ])
         ]),
+        _vm._v(" "),
+        this.errors.hasOwnProperty("title")
+          ? _c(
+              "div",
+              { staticClass: "error-validator" },
+              [
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(this.errors.title[0]) +
+                      "\n                "
+                  )
+                ]
+              ],
+              2
+            )
+          : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "form-group row" }, [
           _c(
@@ -99342,21 +99394,21 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model.trim",
-                  value: _vm.dataForm.carPark.address,
-                  expression: "dataForm.carPark.address",
+                  value: _vm.dataForm.car_park.address,
+                  expression: "dataForm.car_park.address",
                   modifiers: { trim: true }
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text", id: "address-car-park" },
-              domProps: { value: _vm.dataForm.carPark.address },
+              domProps: { value: _vm.dataForm.car_park.address },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
                   _vm.$set(
-                    _vm.dataForm.carPark,
+                    _vm.dataForm.car_park,
                     "address",
                     $event.target.value.trim()
                   )
@@ -99368,6 +99420,23 @@ var render = function() {
             })
           ])
         ]),
+        _vm._v(" "),
+        this.errors.hasOwnProperty("address")
+          ? _c(
+              "div",
+              { staticClass: "error-validator" },
+              [
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(this.errors.address[0]) +
+                      "\n                "
+                  )
+                ]
+              ],
+              2
+            )
+          : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "form-group row" }, [
           _c(
@@ -99385,22 +99454,22 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model.trim",
-                  value: _vm.dataForm.carPark.timeWork,
-                  expression: "dataForm.carPark.timeWork",
+                  value: _vm.dataForm.car_park.time_work,
+                  expression: "dataForm.car_park.time_work",
                   modifiers: { trim: true }
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text", id: "time-work-car-park" },
-              domProps: { value: _vm.dataForm.carPark.timeWork },
+              domProps: { value: _vm.dataForm.car_park.time_work },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
                   _vm.$set(
-                    _vm.dataForm.carPark,
-                    "timeWork",
+                    _vm.dataForm.car_park,
+                    "time_work",
                     $event.target.value.trim()
                   )
                 },
@@ -99411,6 +99480,23 @@ var render = function() {
             })
           ])
         ]),
+        _vm._v(" "),
+        this.errors.hasOwnProperty("time_work")
+          ? _c(
+              "div",
+              { staticClass: "error-validator" },
+              [
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(this.errors.time_work[0]) +
+                      "\n                "
+                  )
+                ]
+              ],
+              2
+            )
+          : _vm._e(),
         _vm._v(" "),
         _vm._m(1),
         _vm._v(" "),
@@ -99425,33 +99511,52 @@ var render = function() {
                 _vm._v("Номер машины")
               ]),
               _vm._v(" "),
-              _vm._l(this.dataForm.cars, function(car) {
+              _vm._l(this.dataForm.cars, function(car, index) {
                 return _c("div", { staticClass: "form-group row" }, [
                   _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model.trim",
-                        value: car.number,
-                        expression: "car.number",
+                        value: car.number_car,
+                        expression: "car.number_car",
                         modifiers: { trim: true }
                       }
                     ],
                     staticClass: "form-control car-elem",
                     attrs: { type: "text" },
-                    domProps: { value: car.number },
+                    domProps: { value: car.number_car },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(car, "number", $event.target.value.trim())
+                        _vm.$set(car, "number_car", $event.target.value.trim())
                       },
                       blur: function($event) {
                         return _vm.$forceUpdate()
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  this.errors.hasOwnProperty("cars_errors")
+                    ? _c("div", [
+                        this.errors.cars_errors[index - 1].hasOwnProperty(
+                          "name_driver"
+                        )
+                          ? _c("span", [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(
+                                    this.errors.cars_errors[index - 1]
+                                      .name_driver
+                                  ) +
+                                  "\n                            "
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e()
                 ])
               })
             ],
@@ -99473,20 +99578,20 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model.trim",
-                        value: car.nameDriver,
-                        expression: "car.nameDriver",
+                        value: car.name_driver,
+                        expression: "car.name_driver",
                         modifiers: { trim: true }
                       }
                     ],
                     staticClass: "form-control car-elem col-md-8",
                     attrs: { type: "text" },
-                    domProps: { value: car.nameDriver },
+                    domProps: { value: car.name_driver },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(car, "nameDriver", $event.target.value.trim())
+                        _vm.$set(car, "name_driver", $event.target.value.trim())
                       },
                       blur: function($event) {
                         return _vm.$forceUpdate()
@@ -118261,7 +118366,7 @@ var Api = /*#__PURE__*/function () {
       baseURL: "/api/",
       //change ENV //http://cloud8020
       headers: {
-        Authorization: 'Bearer '.token
+        Authorization: "Bearer " + token
       }
     });
   }

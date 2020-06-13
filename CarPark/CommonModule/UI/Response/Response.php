@@ -5,6 +5,7 @@ namespace CarPark\CommonModule\UI\Response;
 
 
 use CarPark\CommonModule\Bus\Handler\ResultHandlerInterface;
+use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\Car;
 use \Illuminate\Http\JsonResponse;
 
 trait Response

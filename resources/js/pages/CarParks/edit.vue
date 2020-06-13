@@ -13,22 +13,41 @@
                 <div class="form-group row">
                     <label for="title-car-park" class="col-md-3 col-form-label color-text-elem">Название</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" id="title-car-park" v-model.trim="dataForm.carPark.title">
+                        <input type="text" class="form-control" id="title-car-park" v-model.trim="dataForm.car_park.title">
                     </div>
                 </div>
+
+                <div class="error-validator" v-if="this.errors.hasOwnProperty('title')">
+                    <template >
+                        {{this.errors.title[0]}}
+                    </template>
+                </div>
+
 
                 <div class="form-group row">
                     <label for="address-car-park" class="col-md-3 col-form-label color-text-elem">Адресс</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" id="address-car-park" v-model.trim="dataForm.carPark.address">
+                        <input type="text" class="form-control" id="address-car-park" v-model.trim="dataForm.car_park.address">
                     </div>
+                </div>
+
+                <div class="error-validator" v-if="this.errors.hasOwnProperty('address')">
+                    <template >
+                        {{this.errors.address[0]}}
+                    </template>
                 </div>
 
                 <div class="form-group row">
                     <label for="time-work-car-park" class="col-sm-3 col-form-label color-text-elem">График работы</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" id="time-work-car-park" v-model.trim="dataForm.carPark.timeWork">
+                        <input type="text" class="form-control" id="time-work-car-park" v-model.trim="dataForm.car_park.time_work">
                     </div>
+                </div>
+
+                <div class="error-validator" v-if="this.errors.hasOwnProperty('time_work')">
+                    <template >
+                        {{this.errors.time_work[0]}}
+                    </template>
                 </div>
 
                 <div class="form-group row">
@@ -44,15 +63,20 @@
                     <div class="col-md-4 offset-md-1">
                         <label class="color-text-elem">Номер машины</label>
 
-                        <div class="form-group row" v-for="car in this.dataForm.cars">
-                            <input type="text" class="form-control car-elem" v-model.trim="car.number">
+                        <div class="form-group row" v-for="(car, index) in this.dataForm.cars">
+                            <input type="text" class="form-control car-elem" v-model.trim="car.number_car">
+                            <div v-if="this.errors.hasOwnProperty('cars_errors')">
+                                <span v-if="this.errors.cars_errors[index - 1].hasOwnProperty('name_driver')">
+                                    {{ this.errors.cars_errors[index - 1].name_driver }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 offset-md-1">
                         <label class="color-text-elem">Имя водителя</label>
 
                         <div class="form-group row" v-for="(car, index) in this.dataForm.cars">
-                            <input type="text" class="form-control car-elem col-md-8" v-model.trim="car.nameDriver">
+                            <input type="text" class="form-control car-elem col-md-8" v-model.trim="car.name_driver">
                             <div class="delete-car offset-md-1 col-md-1" @click="removeCar(index)" id="index"><span>&#x2212</span></div>
                         </div>
                     </div>
@@ -80,18 +104,19 @@
         data() {
             return {
                 dataForm: {
-                    carPark:{
+                    car_park: {
                         title: '',
                         address: '',
-                        timeWork: '',
+                        time_work: '',
                     },
                     cars: [
                         {
-                            number: '',
-                            nameDriver: '',
+                            number_car: '',
+                            name_driver: '',
                         },
                     ]
-                }
+                },
+                errors: {}
             }
         },
         methods: {
@@ -103,12 +128,23 @@
             },
             sendData(){
                 console.log(this.dataForm);
+                // if("edit-car") {
+                //     delete this.dataForm.car_park
+                // }
+                //console.log(this.dataForm);
+
                 http.getHttp().post("/car-park", this.dataForm)
                     .then((response) => {
                         console.log(response.data);
                     }).catch((error) => {
                         console.log(error.response);
                         console.log(error.response.data);
+                        this.errors = error.response.data.errors;
+
+                        //this.errors.cars_errors[0 + 1].hasOwnProperty("name_driver");
+                        //this.errors.cars_errors[0 + 1].hasOwnProperty("number_car");
+                    this.errors.cars_errors[index - 1].hasOwnProperty("name_driver");
+
                 });
             },
             removeCar(index){
@@ -218,5 +254,11 @@
     .save-button:active {
         background: #0000CD;
         color: #ffffff;
+    }
+
+    .error-validator {
+        color: #D8000C;
+        text-align: center;
+        margin-bottom: 15px;
     }
 </style>

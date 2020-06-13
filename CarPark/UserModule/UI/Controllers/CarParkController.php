@@ -48,15 +48,18 @@ class CarParkController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function createCarPark(Request $request): JsonResponse
     {
+        Log::debug(print_r($request->all(),true));
+//        Log::debug($request->bearerToken());
+//        die;
         $this->bus->addHandler(CreateOrUpdateCarPark::class, CreateOrUpdateCarParkHandler::class);
         $resultHandler = $this->bus->dispatch(
             CreateOrUpdateCarPark::class,
             array_merge($request->all(), ["jwt" => $request->bearerToken()]),
-            [CarParkValidator::class, CarsValidator::class, JwtVerifyUser::class]
+            [JwtVerifyUser::class, CarParkValidator::class, CarsValidator::class]
         );
 
         return $this->getResponse($resultHandler);
@@ -72,7 +75,7 @@ class CarParkController extends Controller
         $resultHandler = $this->bus->dispatch(
             DeleteCarPark::class,
             array_merge($request->all(), ["jwt" => $request->bearerToken()]),
-            [DeleteCarParkValidator::class, JwtVerifyUser::class]
+            [JwtVerifyUser::class, DeleteCarParkValidator::class]
         );
 
         return $this->getResponse($resultHandler);
