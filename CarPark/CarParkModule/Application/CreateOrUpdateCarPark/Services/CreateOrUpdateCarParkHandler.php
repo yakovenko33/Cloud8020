@@ -1,15 +1,15 @@
 <?php
 
 
-namespace CarPark\UserModule\Application\CreateOrUpdateCarPark\Services;
+namespace CarPark\CarParkModule\Application\CreateOrUpdateCarPark\Services;
 
 
 use CarPark\CommonModule\Bus\Command\CommandQueryInterface;
 use CarPark\CommonModule\Bus\Handler\ResultHandlerInterface;
 use CarPark\CommonModule\Exception\ProblemWithDatabase;
-use CarPark\UserModule\Application\CreateOrUpdateCarPark\DTO\CarPark as CarsParkDto;
-use CarPark\UserModule\Infrastructure\Interfaces\CarParkRepositoryInterface;
-use CarPark\UserModule\Infrastructure\Laravel\Database\Modals\CarPark;
+use CarPark\CarParkModule\Application\CreateOrUpdateCarPark\DTO\CarPark as CarsParkDto;
+use CarPark\CarParkModule\Infrastructure\Interfaces\CarParkRepositoryInterface;
+use CarPark\CarParkModule\Infrastructure\Laravel\Database\Modals\CarPark;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 

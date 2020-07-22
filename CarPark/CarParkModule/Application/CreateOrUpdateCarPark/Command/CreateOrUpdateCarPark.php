@@ -1,13 +1,13 @@
 <?php
 
 
-namespace CarPark\UserModule\Application\CreateOrUpdateCarPark\Command;
+namespace CarPark\CarParkModule\Application\CreateOrUpdateCarPark\Command;
 
 
 use CarPark\CommonModule\Bus\Command\CommandQueryInterface;
 use CarPark\CommonModule\Bus\Command\VerifyCommandQuery;
-use CarPark\UserModule\Application\CreateOrUpdateCarPark\DTO\Car;
-use CarPark\UserModule\Application\CreateOrUpdateCarPark\DTO\CarPark;
+use CarPark\CarParkModule\Application\CreateOrUpdateCarPark\DTO\Car;
+use CarPark\CarParkModule\Application\CreateOrUpdateCarPark\DTO\CarPark;
 
 class CreateOrUpdateCarPark extends VerifyCommandQuery implements CommandQueryInterface
 {

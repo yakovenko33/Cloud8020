@@ -46,21 +46,7 @@ class CarParkController extends Controller
         $this->bus = $bus;
     }
 
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function createCarPark(Request $request): JsonResponse
-    {
-        $this->bus->addHandler(CreateOrUpdateCarPark::class, CreateOrUpdateCarParkHandler::class);
-        $resultHandler = $this->bus->dispatch(
-            CreateOrUpdateCarPark::class,
-            array_merge($request->all(), ["jwt" => $request->bearerToken()]),
-            [JwtVerifyUser::class, CarParkValidator::class, CarsValidator::class]
-        );
 
-        return $this->getResponse($resultHandler);
-    }
 
     /**
      * @param Request $request

@@ -1,11 +1,11 @@
 <?php
 
 
-namespace CarPark\UserModule\Application\CreateOrUpdateCarPark\Middleware;
+namespace CarPark\CarParkModule\Application\CreateOrUpdateCarPark\Middleware;
 
 
 use CarPark\CommonModule\Bus\Handler\ResultHandlerInterface;
-use CarPark\UserModule\Application\CreateOrUpdateCarPark\Command\CreateOrUpdateCarPark;
+use CarPark\CarParkModule\Application\CreateOrUpdateCarPark\Command\CreateOrUpdateCarPark;
 use Illuminate\Contracts\Validation\Validator as Result;
 use Illuminate\Support\Facades\Validator;
 use League\Tactician\Middleware;

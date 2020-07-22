@@ -1,7 +1,7 @@
 <?php
 
 
-namespace CarPark\UserModule\Application\CreateOrUpdateCarPark\DTO;
+namespace CarPark\CarParkModule\Application\CreateOrUpdateCarPark\DTO;
 
 
 class CarPark
